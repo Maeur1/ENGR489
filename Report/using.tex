@@ -1,0 +1,106 @@
+%% $RCSfile: using.tex,v $
+%% $Revision: 1.1 $
+%% $Date: 2010/04/23 01:57:05 $
+%% $Author: kevin $
+%%
+\chapter{Using this document and the \texttt{vuwproject} style}\label{C:us}
+
+If you are writing an MSc or PhD thesis you should \emph{not} be using this style. Instead use \verb=vuwthesis=, which is based on the book style, and conforms to the VUW thesis rules. The thesis style is rather different from the project report style. 
+
+This document is formatted using a local (to ECS and MSOR at VUW) style file. When you write your project report you should be very careful when changing the beginning. The document class settings should read:
+
+\begin{verbatim}
+\documentclass[11pt
+              , a4paper
+              , twoside
+              , openright
+              ]{report}
+\end{verbatim}
+The options to the document class specify that:
+\begin{itemize}
+\item 11pt font is to be used for the main body text,
+\item  we will print on A4 paper, 
+\item we will use duplex (two-sided) printing,
+\item we want chapters to start on a right-hand page. 
+\end{itemize}
+
+The opitons you supply to the  \texttt{vuwproject} style will depend upon
+what you are using the style for.
+
+\subsection{Specifying the details}
+The \texttt{vuwproject} style sets up the front page properly, and provides various commands allowing you to specify the author, title, supervisor or supervisors, the school from which the report is being submitted and the degree that the report is being submitted for. The style has deliberately been designed to do as little as possible. This means that your document can easily be re-formatted as a technical report, or for submission to a conference or journal by using the appropriate style.
+
+It is also possible to use the style to easily produce documents on a
+stand-alone computer where your \LaTeX installtion might not have all
+of the  files and fonts available to machines within ECS or MSOR.
+
+Most of the options to the \texttt{vuwproject} style are currently a simple
+choice and there's a default that will make it obvious if you do not make
+a choice.
+
+Use one of the following options to use fonts available on ECS/MSOR machines
+or to use images that imitate them (assumes you have copies of the images)
+\begin{itemize}
+\item \verb+font+
+\item \verb+image+
+\end{itemize}
+
+Use one of the following options to set the school,
+\begin{itemize}
+\item \verb+ecs+
+\item \verb+msor+
+\end{itemize}
+
+Use one of the following options to choose a pre-defined degree,
+\begin{itemize}
+\item \verb+bschonscomp+
+\item \verb+mcompsci+
+\end{itemize}
+
+or use this command to use an explicit degree or diploma name
+\begin{itemize}
+\item \verb+\otherdegree{DEGREE OR DIPLOMA NAME}+
+\end{itemize}
+
+So, for example, to submit a report for the Master of Comp Sci degree, which
+the style knows about, from within ECS, using the images, you'ld ensure the
+ \texttt{vuwproject} line options looked like:
+
+\begin{verbatim}
+\usepackage[image,ecs,mcompsci]{vuwproject}
+\end{verbatim}
+
+whereas for a degree from within MSOR, when creating the final version on
+an ECS or MSOR machine where you have access to the fonts, you would use
+these options
+
+\begin{verbatim}
+\usepackage[font,msor]{vuwproject}
+\end{verbatim}
+
+
+and add the other degree's name using this command 
+
+\begin{verbatim}
+\otherdegree{DEGREE OR DIPLOMA NAME}
+\end{verbatim}
+
+To specify the supervisor or supervisors use either of the following commands in the preamble.
+\begin{itemize}
+\item \verb+\supervisor{The Supervisor}+
+\item \verb+\supervisors{Super 1 and Super 2}+
+\end{itemize}
+
+If you fail to set any degree or supervisor, or the school, then the front page will report this.
+
+The \texttt{vuwproject} style also sets the default font to be Palatino, using the \texttt{mathpazo} package. Palatino is one of VUW's `offical' fonts, and is the font used for the heading on the front page. The \texttt{mathpazo} package also typesets maths in a style which suits Palatino. 
+
+\section{Copying the style}
+If you want to write your project report away from VUW you will need to make your own copy of the \texttt{vuwproject} style.
+
+You can find out where the original lives by reading the messages that \LaTeX\ prints when it is run.
+
+Alternatively, you can down load a copy of the  \texttt{vuwproject} style from
+the ECS webpages.
+
+Any changes made to your own copy of the \texttt{vuwproject} style will not be reflected in the original, and \textit{vice versa}. Hence it makes sense to leave this as it is, and use a local style file for your own definitions.   
