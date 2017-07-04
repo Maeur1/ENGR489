@@ -13,8 +13,10 @@
 #include <stdlib.h>
 #include <sys/ioctl.h>
 #include <sys/socket.h>
+#include <sys/time.h>
 #include <net/if.h>
 #include <netinet/ether.h>
+#include <unistd.h>
 
 #define SOCK_PATH "/home/mayur/echo_socket"
 
