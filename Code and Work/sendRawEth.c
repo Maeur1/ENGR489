@@ -29,6 +29,7 @@
 #define DEFAULT_RECVIF	"wlan0"
 #define BUF_SIZ		1024
 #define MAX_PACKET_SIZE 2048
+#define DELAY_SECONDS 1
 
 int sendSocketFd, recvSocketFd, fromlen, n;
 struct sockaddr_in from;
@@ -63,8 +64,8 @@ void *sendThread(void *arg){
         if (sendto(sendSocketFd, sendBuf, tx_len, 0, (struct sockaddr*)&sendSocketAddress, sizeof(struct sockaddr_ll)) < 0)
             printf("Send failed\n");
         startTime = getTimeStamp();
-        printf("Send Success\n");
-        usleep(1000000);
+        //printf("Send Success\n");
+        usleep(DELAY_SECONDS*1000000);
     }
 }
 
@@ -225,8 +226,9 @@ int main(int argc, char *argv[])
         n = recvfrom(recvSocketFd, recvBuf, tx_len, 0, NULL, NULL);
         if (n < 0) error("recvfrom");
         if(dataCompare(recvBuf)){
-            printf("Recieved Packet\n");
-            getSocketTimeStamp(sendSocketFd, recvBuf, n);
+            //printf("Recieved Packet\n");
+            uint64_t timeTaken = getSocketTimeStamp(recvSocketFd, recvBuf, n) - startTime;
+            printf("Time taken to travel:\t%ld usec, \t%f sec\n", timeTaken, timeTaken/1000000.0);
         }
     }
 
