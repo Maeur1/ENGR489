@@ -31,18 +31,11 @@
 #define MAX_PACKET_SIZE 2048
 
 int sendSocketFd, recvSocketFd, fromlen, n;
-struct ifreq if_idx;
-struct ifreq sendIfMac;
-struct ifreq recvIfMac;
-struct sockaddr_in server;
 struct sockaddr_in from;
 int tx_len = 0;
-char sendbuf[BUF_SIZ], recvBuf[BUF_SIZ];
-struct ether_header *eh = (struct ether_header *) sendbuf;
-struct iphdr *iph = (struct iphdr *) (sendbuf + sizeof(struct ether_header));
-struct sockaddr_ll socket_address;
-char sendIfName[IFNAMSIZ], recvIfName[IFNAMSIZ];
+char sendBuf[BUF_SIZ], recvBuf[BUF_SIZ];
 uint64_t startTime, endTime;
+struct sockaddr_ll sendSocketAddress, recvSocketAddress;
 
 void error(char *msg)
 {
@@ -67,7 +60,7 @@ uint64_t getSocketTimeStamp(int sock, char * packet, uint length) {
 
 void *sendThread(void *arg){
     while(1){
-        if (sendto(sendSocketFd, sendbuf, tx_len, 0, (struct sockaddr*)&socket_address, sizeof(struct sockaddr_ll)) < 0)
+        if (sendto(sendSocketFd, sendBuf, tx_len, 0, (struct sockaddr*)&sendSocketAddress, sizeof(struct sockaddr_ll)) < 0)
             printf("Send failed\n");
         startTime = getTimeStamp();
         printf("Send Success\n");
@@ -75,19 +68,26 @@ void *sendThread(void *arg){
     }
 }
 
-void *recieveThread(void *arg){
-    printf("Waiting on Recieving Packet\n");
-    while(1){
-        n = recvfrom(recvSocketFd, recvBuf, tx_len, 0, (struct sockaddr *)&from, (socklen_t *)&fromlen);
-        if (n < 0) error("recvfrom");
-        printf("Recieved Packet\n");
-        getSocketTimeStamp(sendSocketFd, recvBuf, n);
+int dataCompare(char* dataIn){
+    int size = sizeof(dataIn)/sizeof(char);
+    for(int i = 0; i < size; i++){
+        if(dataIn[i] != sendBuf[i]){
+            return 0;
+        }
     }
+    return 1;
 }
 
 int main(int argc, char *argv[])
 {
     pthread_t senderPThread, recievePThread;
+    struct ifreq ifopts;    /* set promiscuous mode */
+    struct ifreq if_idx;
+    struct ifreq sendIfMac;
+    struct ifreq recvIfMac;
+    struct ether_header *eh = (struct ether_header *) sendBuf;
+    struct iphdr *iph = (struct iphdr *) (sendBuf + sizeof(struct ether_header));
+    char sendIfName[IFNAMSIZ], recvIfName[IFNAMSIZ];
 	
 	/* Get sender interface name */
 	if (argc > 1)
@@ -135,6 +135,16 @@ int main(int argc, char *argv[])
 	if (ioctl(recvSocketFd, SIOCGIFHWADDR, &recvIfMac) < 0)
 	    perror("SIOCGIFHWADDR");
 
+    /* Bind to device */
+    recvSocketAddress.sll_family = PF_PACKET;
+    recvSocketAddress.sll_protocol = htons(ETH_P_ALL);
+    recvSocketAddress.sll_ifindex = if_nametoindex(recvIfName);
+    if (bind(recvSocketFd, (struct sockaddr*) &recvSocketAddress, sizeof(recvSocketAddress)) < 0) {
+        perror("bind failed\n");
+        close(recvSocketFd);
+        exit(EXIT_FAILURE);
+    }
+
     printf("Successfully received Sender MAC Address : %02x:%02x:%02x:%02x:%02x:%02x\n",
         (unsigned char) sendIfMac.ifr_hwaddr.sa_data[0],
         (unsigned char) sendIfMac.ifr_hwaddr.sa_data[1],
@@ -152,7 +162,7 @@ int main(int argc, char *argv[])
         (unsigned char) recvIfMac.ifr_hwaddr.sa_data[5]);
 
 	/* Construct the Ethernet header */
-	memset(sendbuf, 0, BUF_SIZ);
+	memset(sendBuf, 0, BUF_SIZ);
 	/* Ethernet header */
 	eh->ether_shost[0] = ((uint8_t *)&sendIfMac.ifr_hwaddr.sa_data)[0];
 	eh->ether_shost[1] = ((uint8_t *)&sendIfMac.ifr_hwaddr.sa_data)[1];
@@ -172,45 +182,54 @@ int main(int argc, char *argv[])
 	tx_len += sizeof(struct ether_header);
 
     /* IP header */
-	sendbuf[tx_len++] = 0x45;//IPv4, header length of 5
-	sendbuf[tx_len++] = 0x00;//DSCP and ECN
-	sendbuf[tx_len++] = 0x00;//
-	sendbuf[tx_len++] = 0x14;// 20 bytes for size
-    sendbuf[tx_len++] = 0x00;// ID
-    sendbuf[tx_len++] = 0x00;// Flag and Fragment Offset
-    sendbuf[tx_len++] = 0xF0;// TTL and Protocol
-    sendbuf[tx_len++] = 0x00;// Header CHecksum
-    sendbuf[tx_len++] = 0x00;// Src IP
-    sendbuf[tx_len++] = 0x00;// Src IP
-    sendbuf[tx_len++] = 0x00;// Dst IP
-    sendbuf[tx_len++] = 0x00;// Dst IP
+	sendBuf[tx_len++] = 0x45;//IPv4, header length of 5
+	sendBuf[tx_len++] = 0x00;//DSCP and ECN
+	sendBuf[tx_len++] = 0x00;//
+	sendBuf[tx_len++] = 0x14;// 20 bytes for size
+    sendBuf[tx_len++] = 0x00;// ID
+    sendBuf[tx_len++] = 0x00;// ID
+    sendBuf[tx_len++] = 0x00;// Flag and Fragment Offset
+    sendBuf[tx_len++] = 0x00;// Flag and Fragment Offset
+    sendBuf[tx_len++] = 0xFF;// TTL
+    sendBuf[tx_len++] = 0x00;// Protocol
+    sendBuf[tx_len++] = 0x00;// Header CHecksum
+    sendBuf[tx_len++] = 0x00;// Header CHecksum
+    sendBuf[tx_len++] = 0x00;// Src IP
+    sendBuf[tx_len++] = 0x00;// Src IP
+    sendBuf[tx_len++] = 0x00;// Src IP
+    sendBuf[tx_len++] = 0x00;// Src IP
+    sendBuf[tx_len++] = 0x00;// Dst IP
+    sendBuf[tx_len++] = 0x00;// Dst IP
+    sendBuf[tx_len++] = 0x00;// Dst IP
+    sendBuf[tx_len++] = 0x00;// Dst IP
 
 	/* Packet data */
-    sendbuf[tx_len++] = 0xde;
-    sendbuf[tx_len++] = 0xad;
-    sendbuf[tx_len++] = 0xbe;
-    sendbuf[tx_len++] = 0xef;
-    sendbuf[tx_len++] = 0xde;
-    sendbuf[tx_len++] = 0xad;
-    sendbuf[tx_len++] = 0xbe;
-    sendbuf[tx_len++] = 0xef;
 
 	/* Index of the network device */
-	socket_address.sll_ifindex = if_idx.ifr_ifindex;
+	sendSocketAddress.sll_ifindex = if_idx.ifr_ifindex;
 	/* Address length*/
-	socket_address.sll_halen = ETH_ALEN;
+	sendSocketAddress.sll_halen = ETH_ALEN;
 	/* Destination MAC */
-	socket_address.sll_addr[0] = MY_DEST_MAC0;
-	socket_address.sll_addr[1] = MY_DEST_MAC1;
-	socket_address.sll_addr[2] = MY_DEST_MAC2;
-	socket_address.sll_addr[3] = MY_DEST_MAC3;
-	socket_address.sll_addr[4] = MY_DEST_MAC4;
-	socket_address.sll_addr[5] = MY_DEST_MAC5;
+	sendSocketAddress.sll_addr[0] = MY_DEST_MAC0;
+	sendSocketAddress.sll_addr[1] = MY_DEST_MAC1;
+	sendSocketAddress.sll_addr[2] = MY_DEST_MAC2;
+	sendSocketAddress.sll_addr[3] = MY_DEST_MAC3;
+	sendSocketAddress.sll_addr[4] = MY_DEST_MAC4;
+	sendSocketAddress.sll_addr[5] = MY_DEST_MAC5;
 
 	/* Send packet */
     pthread_create(&senderPThread,NULL,sendThread,NULL);
-    pthread_create(&recievePThread,NULL,recieveThread,NULL);
+
+    printf("Waiting on Recieving Packet\n");
+    while(1){
+        n = recvfrom(recvSocketFd, recvBuf, tx_len, 0, NULL, NULL);
+        if (n < 0) error("recvfrom");
+        if(dataCompare(recvBuf)){
+            printf("Recieved Packet\n");
+            getSocketTimeStamp(sendSocketFd, recvBuf, n);
+        }
+    }
+
     pthread_join(senderPThread, NULL);
-    pthread_join(recievePThread, NULL);
 	return 0;
 }
