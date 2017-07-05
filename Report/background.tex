@@ -32,7 +32,7 @@ This project will be investigating the latency present in a Gigabit Ethernet sys
 
 \subsection{Layer 2: Data link}
 
-Data link layer is responsible for node-to-node data communication. 
+\par Data link layer is responsible for node-to-node data communication. 
 It links from one device to another, determing the connection status of two physically connected devices.
 A feature of this layer, is the ability to detect and correct errors created at the physical layer.
 The IEEE Standard 802 \cite{IEEE802} details how this layer is split into two sub layers, Media Access Control (MAC), and Logical Link Control (LLC).
@@ -40,20 +40,41 @@ This project will cover networking switches which distinguish different destinat
 
 \subsection{Layer 3: Network}
 
-Network layer provides functionality when sending data across a network.
+\par Network layer provides functionality when sending data across a network.
 End-to-end communication is aided by assigning each node in the network an address, which it identifies itself with.
 This allows data to be passed through intermediate nodes, which would continue to traverse until the target node has been reached.
 This project will not be including this layer, or any others higher than this, as the latency measurements involved are short, single node-to-node distances.
 
 \section{Network Latency}
 
+\par As network operations are discretized, there is a delay between splitting data and information into pieces, then gathering this information again.
+Each layer of the networking OSI model, a new piece of information is added to the discrete pieces.
+The process of adding this information, and also removing it, causes delays in processing infromation.
+The latency of a packet can be defined in many ways, for the purposes of this project, latency will be defined as the time from one node to another.
+
 \subsection{Connection Time}
+
+\par Connection time is defined to be the time that one end of a connection has been established with another end.
+Only once the connection has been established, can information from one end flow to the other.
+Many synchronization procedures and exchanging of information takes place when a link is brought up.
+These procedure produces a delay, which can be measured to be the latency of a link.
+This timing procedure is common for higher layered protocols, where security and authentication could be an issue.
 
 \subsection{Round Trip Time}
 
+\par Information sent from one place to another can be measured as time taken for a response to be sent from the other end of the link.
+This can be measured by sending a packet from an end of a link, to the other requesting a response, and measuring the time taken for the response.
+Half the round trip time can be inferred to be the latency of a link.
+
+\section{Measurement Techniques}
+
+\subsection{Cut-Through}
+
+\subsection{Store-and-Forward}
+
 \section{Current Timing Solutions}
 
-Timing of network packets can currently done through very expensive and bulky devices. 
+\par Timing of network packets can currently done through very expensive and bulky devices. 
 For this reason, there are many software implementations that allow high speed packet processing.
 The following software implementations have some restrictions on what hardware they can run on.
 The precision to measure the latency of packets is unknown and needs to be investigated.
@@ -61,7 +82,7 @@ This project is to combine the flexibility of software and hardware to create a 
 
 \subsection{Data Plane Development Kit (DPDK)}
 
-Data Plane Development Kit (DPDK) is a set of C libraries to allow for rapid processing of network packets.
+\par Data Plane Development Kit (DPDK) is a set of C libraries to allow for rapid processing of network packets.
 It utilizes a few low level Application Programming Interfaces (APIs) to minimize the overhead of using a specific architecture computer.
 Reducing this overhead of the CPU reduces the amount of latecy present in the act of measuring the time between packets itself.
 This is a very good software solution to what is currently on the market, but one caveat to using this technology is that only specific hardware can be used.
@@ -69,17 +90,11 @@ The Network Interface Card (NIC) on the computer has to be compatible with the s
 
 \subsection{PF\textunderscore RING}
 
-PF\textunderscore RING by ntop\texttrademark is a software solution for rapid network packet processing.
+\par PF\textunderscore RING by ntop\texttrademark is a software solution for rapid network packet processing.
 It is a network socket technology which improves the speed at which packets are captured by the processor.
 Faster packet processing ensures that the time stamp placed on an ingress packet is accurate as it can be.
 This is a software solution which could potentially work well, but is limited by the software latency of needing to be processed by a processor.
 The NIC on the computer does not have to be a specific model, meaning this is a much more flexible solution.
-
-\section{Measurement Techniques}
-
-\subsection{Cut-Through}
-
-\subsection{Store-and-Forward}
 
 \section{Field Programmable Gate Array}
 
