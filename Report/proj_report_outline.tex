@@ -14,6 +14,11 @@
 
 \usepackage{url} % for typesetting urls
 
+\usepackage{xspace} % space after trademarks specifically
+
+\let\OldTexttrademark\texttrademark
+\renewcommand{\texttrademark}{\OldTexttrademark\xspace}%
+
 %
 %  We don't want figures to float so we define
 %
@@ -76,7 +81,7 @@ A short description of the project goes here.
 
 \maketitle
 
-\include{acknowledge}
+%\include{acknowledge}
 
 \tableofcontents
 

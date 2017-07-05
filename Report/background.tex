@@ -57,11 +57,23 @@ Timing of network packets can currently done through very expensive and bulky de
 For this reason, there are many software implementations that allow high speed packet processing.
 The following software implementations have some restrictions on what hardware they can run on.
 The precision to measure the latency of packets is unknown and needs to be investigated.
-This project is to combine the flexibility of software and hardware to implement the measurement utility.
+This project is to combine the flexibility of software and hardware to create a packet latency measurement utility.
 
-\subsection{Data Plane Developemnt Kit (DPDK)}
+\subsection{Data Plane Development Kit (DPDK)}
+
+Data Plane Development Kit (DPDK) is a set of C libraries to allow for rapid processing of network packets.
+It utilizes a few low level Application Programming Interfaces (APIs) to minimize the overhead of using a specific architecture computer.
+Reducing this overhead of the CPU reduces the amount of latecy present in the act of measuring the time between packets itself.
+This is a very good software solution to what is currently on the market, but one caveat to using this technology is that only specific hardware can be used.
+The Network Interface Card (NIC) on the computer has to be compatible with the software.
 
 \subsection{PF\textunderscore RING}
+
+PF\textunderscore RING by ntop\texttrademark is a software solution for rapid network packet processing.
+It is a network socket technology which improves the speed at which packets are captured by the processor.
+Faster packet processing ensures that the time stamp placed on an ingress packet is accurate as it can be.
+This is a software solution which could potentially work well, but is limited by the software latency of needing to be processed by a processor.
+The NIC on the computer does not have to be a specific model, meaning this is a much more flexible solution.
 
 \section{Measurement Techniques}
 
@@ -70,3 +82,7 @@ This project is to combine the flexibility of software and hardware to implement
 \subsection{Store-and-Forward}
 
 \section{Field Programmable Gate Array}
+
+\subsection{Reconfigurable Macro Cells}
+
+\subsection{FPGA vs Microcontroller}
