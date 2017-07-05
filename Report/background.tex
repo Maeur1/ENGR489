@@ -66,11 +66,26 @@ This timing procedure is common for higher layered protocols, where security and
 This can be measured by sending a packet from an end of a link, to the other requesting a response, and measuring the time taken for the response.
 Half the round trip time can be inferred to be the latency of a link.
 
-\section{Measurement Techniques}
+\section{Switching Techniques}
+
+\par Network packet switches can switch network packets using different techniques.
+Each technique has the ability to reduce packet latency, or increase reliability. 
+Some techniques cannot work at all on specific data protocols.
+Modern switches can achieve latency times ranging from hundreds of nanoseconds to tens of microseconds.
+A big factor for the latency timing is how many transmitting devices are reaching the same reciever.
 
 \subsection{Cut-Through}
 
+\par Cut-Through switching is a latency reducing switching technique. 
+Each transaction begins processing each network packet as soon as it is beginning to be transferred into the switch.
+Once enough information is recieved to know which destination device it is, it begins forwarding information to the next hop.
+This technique can only operate on data which has a header for the destination at the beginning of the packet.
+
 \subsection{Store-and-Forward}
+
+\par Switching data occasionally requires information which is embedded deep within the packet, hence header data cannot provide which device to transmit to.
+A technique to process this data is called Store-and-Forward, where the whole packet is digested by the switch to determine the destination.
+As this requires time to recieve data, process, then send this data, it does not have the same latency-reducing effect as Cut-Through does.
 
 \section{Current Timing Solutions}
 
@@ -96,8 +111,19 @@ Faster packet processing ensures that the time stamp placed on an ingress packet
 This is a software solution which could potentially work well, but is limited by the software latency of needing to be processed by a processor.
 The NIC on the computer does not have to be a specific model, meaning this is a much more flexible solution.
 
-\section{Field Programmable Gate Array}
+\section{Field Programmable Gate Array(FPGA)}
+
+\par Many implementations of measuring packet latency require processors and are limited to timing based off clock cycles from a processor.
+Field Programmable Gate Array (FPGA) is a system of intertwined sets of logic gates, with configurable links between them.
+This has the advantage of begin able to create complex digital circuits with no need for a clock signal.
+This means no processor is involved with timing critical operations.
+Timing is dependant on the speed of the input clock and the limitations of the Gate Array Fabric.
 
 \subsection{Reconfigurable Macro Cells}
+
+\par Sets of logic gates in a FPGA are called Macro Cells. 
+These sets of logic gates are reconfigurable to select which logic operation takes place through the cell, and also what the inputs are.
+Some Macro Cells have specific capabilities, such as the ability to generate a clock signal, or recieve a clock signal reliably.
+Each Cell recieves information about configuration from Flash memory embedded on the board nearby.
 
 \subsection{FPGA vs Microcontroller}
