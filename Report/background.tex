@@ -1,18 +1,49 @@
 \chapter{Background}\label{C:back}
 
+\section{Network packet}
+
+\par Communication between computers is established through the means of physical connections and protcols overlaying on top of this. 
+A widespread communication protocol is to break down each point of communication into discrete pieces called network packets.
+These network packets contain many layers (Figure: \ref{fig:OSIModel}) of communication information.
+Communication layers can be broken down into a few independent layers which hold specific purposes. 
+Each layer contains information which can aid with transporting the information to the correct computer securely.
+As each layer is independent, each higher layer does not affect the forthcoming layers.
+High layers of the model are for purposes such as reliability of data and the data itself in the packet.
+For the purposes of this project, an explanation of only the first three layers of the Open Systems Interconnection (OSI) model is concerned.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=5cm,height=5cm,keepaspectratio]{Images/OSIModel.png}
+        \caption{OSI Model}
+        \label{fig:OSIModel}
+    \end{center}
+\end{figure}
+
+\subsection{Layer 1: Physical}
+
+\par The physical layer is specifying the electrical and physical medium that is used to transport individual bits from one computer to another.
+Two or more computers can be connected through many different physical mediums such as copper wiring and light fibers. 
+Each medium has specific pros and cons, from implementation costs to throughtput capabilities.
+The physical layer is responsible for transmitting and receiveing unstructured data.
+Communication can be either Simplex, Half Duplex or Full Duplex.
+The network topology is defined by how the physical layer is configured.
+An example of a phyiscal medium is a copper medium is used to link two devices together.
+This project will be investigating the latency present in a Gigabit Ethernet system, using copper based medium.
+
+\subsection{Layer 2: Data link}
+
+Data link layer is responsible for node-to-node data communication. 
+It links from one device to another, determing the connection status of two physically connected devices.
+A feature of this layer, is the ability to detect and potentially correct errors created at the physical layer.
+\cite{IEEE802}
+
+\subsection{Layer 3: Network}
+
 \section{Existing Solutions}
 
 \subsection{DPDK}
 
 \subsection{PF\textunderscore RING}
-
-\section{Breakdown of a typical network packet}
-
-\subsection{Layer 1: Physical}
-
-\subsection{Layer 2: Data link}
-
-\subsection{Layer 3: Network}
 
 \section{Measurement Techniques}
 
@@ -20,3 +51,4 @@
 
 \subsection{Store-and-Forward}
 
+\section{Field Programmable Gate Array}
