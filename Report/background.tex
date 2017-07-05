@@ -34,14 +34,32 @@ This project will be investigating the latency present in a Gigabit Ethernet sys
 
 Data link layer is responsible for node-to-node data communication. 
 It links from one device to another, determing the connection status of two physically connected devices.
-A feature of this layer, is the ability to detect and potentially correct errors created at the physical layer.
-\cite{IEEE802}
+A feature of this layer, is the ability to detect and correct errors created at the physical layer.
+The IEEE Standard 802 \cite{IEEE802} details how this layer is split into two sub layers, Media Access Control (MAC), and Logical Link Control (LLC).
+This project will cover networking switches which distinguish different destination devices by their unique MAC addresses.
 
 \subsection{Layer 3: Network}
 
-\section{Existing Solutions}
+Network layer provides functionality when sending data across a network.
+End-to-end communication is aided by assigning each node in the network an address, which it identifies itself with.
+This allows data to be passed through intermediate nodes, which would continue to traverse until the target node has been reached.
+This project will not be including this layer, or any others higher than this, as the latency measurements involved are short, single node-to-node distances.
 
-\subsection{DPDK}
+\section{Network Latency}
+
+\subsection{Connection Time}
+
+\subsection{Round Trip Time}
+
+\section{Current Timing Solutions}
+
+Timing of network packets can currently done through very expensive and bulky devices. 
+For this reason, there are many software implementations that allow high speed packet processing.
+The following software implementations have some restrictions on what hardware they can run on.
+The precision to measure the latency of packets is unknown and needs to be investigated.
+This project is to combine the flexibility of software and hardware to implement the measurement utility.
+
+\subsection{Data Plane Developemnt Kit (DPDK)}
 
 \subsection{PF\textunderscore RING}
 
