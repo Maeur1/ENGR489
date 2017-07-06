@@ -1,2 +1,50 @@
 \chapter{Work Done So Far}\label{C:workDoneSoFar}
 
+\section{FPGA Design Creation}
+
+\par To work with the specified FPGA (Zynq Z7020 \cite{fpga}) a set of propietary software soltuions must be used to develop designs.
+These are a suite of software from Xilinx, which are under Vivado Design Suite, the Software Development Kit and also the Petalinux software.
+The process of creating a custom design on the FPGA requires code to be written in Hardware Descriptor Language (HDL).
+I have created a simple design where it would take a on board clock and generate a signal which makes an LED flash every second using logic gates.
+This helped me learn the design suite, and also understand the workflow to get a design onto the FPGA.
+
+\section{Xilinx University Program}
+
+\par Initally, I followed the Xilinx University Program files which were supplied to me by Robin Dykstra. 
+These tutorials taught me how designs can be synthesised and implemented on the FPGA, and the contraints that I had when making my own design.
+I began by learning about how to create a completely independent FPGA fabric design, which does not incorporate any features present in the ARM core processors.
+I followed on to creating designs which used the ARM cores to produce a linux subsystem. 
+This learning would be useful when producing a user friendly interface to initate a test, and retrieve the results.
+Following the linux subsystem, I ended with a complete design where the linux subsystem would interact with FPGA fabric through an interconnect called Advanced Microcontroller Bus Architecture (AMBA).
+
+\section{Petalinux}
+
+\par Petalinux is a section of the software suite provided by Xilinx. 
+It provides the tools to create a custom linux kernel to incorporate features in the FPGA fabric.
+This is vital to the project, as the timing of the ethernet packets woud be done in the FPGA fabric, and the data would be accessed in the Linux system.
+
+\par I worked on producing a custom petalinux image where the linux would detect the ethernet interface added by the Zedboard, and be able to communicate through it. 
+This took a considerable amount of time, as the information available in the internet was conflicting, or was outdated.
+I eventually was able to create a petalinux image which could bring up the ethernet interface, and allow traffic to flow through the default kernel driver.
+
+\section{PicoZed Development Board}
+
+\par Initally, A PicoZed development board with a FMC carrier V1 was planned as the base of the project.
+Half way through the implementation of the design, it was realised that it was not suitable for the project.
+This was because the Low Pin Count (LPC) FPGA Mezzanine Card (FMC) connector on the FMC carrier card was incorrectly routed to the wrong pins on the FPGA.
+The FPGA has specific pins for allowing clock signals to pass through, called Clock Capable (CC) Pins.
+These pins have buffers on the FPGA designed to handle fast clock signals.
+The FMC Carrier card V1 did not allow for the correct Clock Capable pins to be routed to the on board ethernet phy.
+When I began testing the design, the design could not be synthesized because of this restriction, hence I changed development board to the Zedboard.
+
+\section{Ethernet FMC card}
+
+\par Once the Zedboard was setup, there was minimal change to the code.
+But another problem was encountered, which was that the Ethernet FMC card would prevent the Zedboard from booting.
+This investigation is ongoing, and a new Ethernet FMC card is currently being sent to me, but it is unknown why the current card would cause these problems.
+I have a Petalinux image ready to accept the extra Ethernet phys on the Ethernet FMC card, and once the new one has arrived, the work can continue.
+
+\section{C Implementation}
+
+\par As there were issues with the FPGA implementation, I wrote a C implementation which gets timestamps from the kernel directly.
+This was a temporary measure so that some results can be retrieved if the FPGA implementation gets too far behind.
