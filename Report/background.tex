@@ -74,6 +74,14 @@ Some techniques cannot work at all on specific data protocols.
 Modern switches can achieve latency times ranging from hundreds of nanoseconds to tens of microseconds.
 A big factor for the latency timing is how many transmitting devices are reaching the same reciever.
 
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=7cm,keepaspectratio]{Images/SwitchingTechniques.png}
+        \caption{Packet Timing from different switching techniques \cite{latencyinethernet}}
+        \label{fig:PacketTiming}
+    \end{center}
+\end{figure}
+
 \subsection{Cut-Through}
 
 \par Cut-Through switching is a latency reducing switching technique. 
@@ -95,6 +103,12 @@ The following software implementations have some restrictions on what hardware t
 The precision to measure the latency of packets is unknown and needs to be investigated.
 This project is to combine the flexibility of software and hardware to create a packet latency measurement utility.
 
+\subsection{Precision Time Protocol (PTP)}
+
+Precision Time Protocol is a protocol design for synchronizing the clocks in a network of computers.
+Precision of the protocol that can be achieved is in the sub-microseconds \cite{ieee1588}. 
+This protocol is implemented on a variety of devices, but is still limited by resolution of the processor.
+
 \subsection{Data Plane Development Kit (DPDK)}
 
 \par Data Plane Development Kit (DPDK) is a set of C libraries to allow for rapid processing of network packets.
@@ -111,6 +125,7 @@ Faster packet processing ensures that the time stamp placed on an ingress packet
 This is a software solution which could potentially work well, but is limited by the software latency of needing to be processed by a processor.
 The NIC on the computer does not have to be a specific model, meaning this is a much more flexible solution.
 
+
 \section{Field Programmable Gate Array(FPGA)}
 
 \par Many implementations of measuring packet latency require processors and are limited to timing based off clock cycles from a processor.
@@ -126,4 +141,3 @@ These sets of logic gates are reconfigurable to select which logic operation tak
 Some Macro Cells have specific capabilities, such as the ability to generate a clock signal, or recieve a clock signal reliably.
 Each Cell recieves information about configuration from Flash memory embedded on the board nearby.
 
-\subsection{FPGA vs Microcontroller}
