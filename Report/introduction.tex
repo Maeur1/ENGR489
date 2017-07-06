@@ -4,7 +4,12 @@
 These devices recieve a packet, evaluate the destination, and output to the correct next hop rapidly.
 These routers and switches are catagorized by their throughput, ranging from 10mbps (megabits per second) to 100gbps (gigabits per second).
 It is common to see these marketed based on their throughput capabilites, with little to no information about what latency is present.
-The goal is to create a piece of equipment which can measure this latency with precision ranging in the microseconds to nanoseconds.
+Currently there are a few software packages (such as DPDK and PF\textunderscore RING) which can measure this latency to a accuracy to an order of microseconds.
+This is sufficient for most network testing applications, but for critical research areas, this accuracy is not enough.
+Once high accuracy can be achieved, then research can be done into increasing performance and reducing latency times of network switches.
+The main problem with these solutions is that there is the overhead of an operating system and the timestamp recieved on processed packets are delayed by a varying degree.
+
+\par To achieve high precison and accuracy of these latency measurement, a hardware implemented packet processing device would need to be devised.
 
 \section{Problem}
 

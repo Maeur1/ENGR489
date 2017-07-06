@@ -1,5 +1,7 @@
 \chapter{Background}\label{C:back}
 
+\section{Previous Work}
+
 \section{Network packet}
 
 \par Communication between computers is established through the means of physical connections and protcols overlaying on top of this. 
@@ -97,7 +99,7 @@ As this requires time to recieve data, process, then send this data, it does not
 
 \section{Current Timing Solutions}
 
-\par Timing of network packets can currently done through very expensive and bulky devices. 
+\par Timing of network packets can currently done through a utility called Ping, but it was not meant for accurate measurements \cite{pingisbad}.
 For this reason, there are many software implementations that allow high speed packet processing.
 The following software implementations have some restrictions on what hardware they can run on.
 The precision to measure the latency of packets is unknown and needs to be investigated.
@@ -126,7 +128,7 @@ This is a software solution which could potentially work well, but is limited by
 The NIC on the computer does not have to be a specific model, meaning this is a much more flexible solution.
 
 
-\section{Field Programmable Gate Array(FPGA)}
+\section{Field Programmable Gate Array (FPGA)}
 
 \par Many implementations of measuring packet latency require processors and are limited to timing based off clock cycles from a processor.
 Field Programmable Gate Array (FPGA) is a system of intertwined sets of logic gates, with configurable links between them.
