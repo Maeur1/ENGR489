@@ -1,29 +1,28 @@
 \chapter{Introduction}\label{C:intro}
 
 \par A core function of the internet is the ability to switch network packets from one place to another using devices called routers and switches.
-These devices recieve a packet, evaluate the destination, and output to the correct next hop rapidly.
-These routers and switches are catagorized by their throughput, ranging from 10mbps (megabits per second) to 100gbps (gigabits per second).
-It is common to see these marketed based on their throughput capabilites, with little to no information about what latency is present.
+These devices receive a packet, evaluate the destination, and output to the correct next hop rapidly.
+These routers and switches are categorized by their throughput, ranging from 10mbps (megabits per second) to 100gbps (gigabits per second).
+It is common to see these marketed based on their throughput capabilities, with little to no information about what latency is present.
 Currently there are a few software packages (such as DPDK and PF\textunderscore RING) which can measure this latency to a accuracy to an order of microseconds.
 This is sufficient for most network testing applications, but for critical research areas, this accuracy is not enough.
 Once high accuracy can be achieved, then research can be done into increasing performance and reducing latency times of network switches.
-The main problem with these solutions is that there is the overhead of an operating system and the timestamp recieved on processed packets are delayed by a varying degree.
+The main problem with these solutions is that there is the overhead of an operating system and the timestamp received on processed packets are delayed by a varying degree.
 
-\par To achieve high precison and accuracy of these latency measurement, a hardware implemented packet processing device would need to be devised.
+\par To achieve high precision and accuracy of these latency measurement, a hardware implemented packet processing device would need to be devised.
 
 \section{Problem}
 
-\par Presently there is no existing device that can evaluate the latency of simple switches to measre the lage that is present in these devices.
+\par Presently there is no existing device that can evaluate the latency of simple switches to measure the lag that is present in these devices.
 To measure these devices, there is low level software solutions which can do long distance measurements, ranging in the milliseconds to microseconds.
-Measuring this latency to a high degree of accuracy and precision is useful to research and develpoment purposes.
+Measuring this latency to a high degree of accuracy and precision is useful to research and development purposes.
 Networking latency bottlenecks and problems can be detected if a device exists which can measure this reliably.
 
 \section{Solution}
 
 \par As there are many software solutions to measure packet latency, a hardware implementation is needed to achieve precision and accuracy requirements.
 To achieve this, a Field Programmable Gate Array implementation can improve the precision and also accuracy of the timing.
-There is no overhead of processor clocking and also allow the flexability of software by retrieving data in a digital format.
-
+There is no overhead of processor clocking and also allow the flexibility of software by retrieving data in a digital format.
 
 \par This solution was compared with two different implementations, Data Plane Development Kit (DPDK) and also PF\textunderscore RING.
 The implementation of both are software based, hence a overhead of the operating system in on the computer can introduce inconsistencies in packet timing measurements.
@@ -32,9 +31,9 @@ The implementation of both are software based, hence a overhead of the operating
 This device would measure the time at a hardware level, where the accuracy of the measurement deviates on the order of nanoseconds.
 The device would be implemented on a Xilinx Zedboard by Avnet\texttrademark with an Ethernet FMC expansion card (Robust Edition).
 Using the board, with the expansion card allows for low level gigabit ethernet to be probed by FPGA fabric on the Zedboard.
-The Ethernet FMC expansion card contains four gigabit ethernet phy transceivers, allowing the FPGA to send and recieve network packets from four different sources at once.
+The Ethernet FMC expansion card contains four gigabit ethernet phy transceivers, allowing the FPGA to send and receive network packets from four different sources at once.
 The FPGA on the Zedboard is a Xilinx Z7020 based FPGA (XC7020CLG484ACX1221) \cite{fpga}.
-This is a part from the Zynq Famliy of FPGAs from Xilinx, which incorporate a dual ARM core processor combined with FPGA fabric.
+This is a part from the Zynq Family of FPGAs from Xilinx, which incorporate a dual ARM core processor combined with FPGA fabric.
 To produce the high speed clocks required for the timing functions, a internal clock management system called a Mixed-Mode Clock Manager, can synthesize a higher clock rate.
 This is vital to the timing of packets, as a higher clock rate can provide the ability to measure the packet times with greater fidelity.
 
