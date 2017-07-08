@@ -1,50 +1,58 @@
 \chapter{Work Done So Far}\label{C:workDoneSoFar}
 
-\section{FPGA Design Creation}
+\par The FPGA chosen to implement a packet timing unit is a XC7Z020 Zynq-7000 FPGA by Xilinx. This
+FPGA was chosen as it is a modern part that has a large amount of supporting documentation online
+and expertise for the platform was locally available at the University, should I need some assistance
+with the project.
 
-\par To work with the specified FPGA (Zynq Z7020 \cite{fpga}) a set of proprietary software solutions must be used to develop designs.
-These are a suite of software from Xilinx, which are under Vivado Design Suite, the Software Development Kit and also the Petalinux software.
-The process of creating a custom design on the FPGA requires code to be written in Hardware Descriptor Language (HDL).
-I have created a simple design where it would take a on board clock and generate a signal which makes an LED flash every second using logic gates.
-This helped me learn the design suite, and also understand the workflow to get a design onto the FPGA.
+\par To develop for this FPGA, a development board is required as there are many additional components
+that needed for development of this project. This includes flash memory, Random Access Memory
+(RAM), Universal Asynchronous Receiver/Transmitter (UART) and an Ethernet Physical Transceiver
+(Ethernet Phy). Initially the project was to be implemented on a PicoZed Z7020 System-On-a-Module
+(SOM) combined with a PicoZed FMC Carrier V1, for its dual on board ethernet port capabilities (one
+can serve as input, other as output), but was later changed to a Zedboard for reasons discussed
+further.
 
-\section{Xilinx University Program}
+\par Initial work began with learning the software workflow designed by Xilinx. This consisted of
+understanding a hardware descriptor language (HDL) supported by Xilinx and the complementing
+toolchain. I had experience with both VHISC Hardware Descriptor Language (VHDL) and Verilog, two
+HDL's supported by Xilinx, so little time was needed learning the language.
 
-\par Initially, I followed the Xilinx University Program files which were supplied to me by Robin Dykstra.
-These tutorials taught me how designs can be synthesised and implemented on the FPGA, and the constraints that I had when making my own design.
-I began by learning about how to create a completely independent FPGA fabric design, which does not incorporate any features present in the ARM core processors.
-I followed on to creating designs which used the ARM cores to produce a linux subsystem.
-This learning would be useful when producing a user friendly interface to initiate a test, and retrieve the results.
-Following the linux subsystem, I ended with a complete design where the linux subsystem would interact with FPGA fabric through an interconnect called Advanced Microcontroller Bus Architecture (AMBA).
+\section{Xilinx University Program (XUP)}
 
-\section{Petalinux}
+Xilinx provides FPGA toolchain tutorials from which I learned how to construct a basic FPGA design in
+software called Vivado. The tutorials in the program were targeted to a Zedboard (Different FPGA
+development board), so modifications had to be done to ensure the design was compatible with the
+PicoZed Z7020 SOM on the PicoZed FMC Carrier V1.
 
-\par Petalinux is a section of the software suite provided by Xilinx.
-It provides the tools to create a custom linux kernel to incorporate features in the FPGA fabric.
-This is vital to the project, as the timing of the ethernet packets would be done in the FPGA fabric, and the data would be accessed in the Linux system.
+\section{Implementation Stage}
 
-\par I worked on producing a custom petalinux image where the linux would detect the ethernet interface added by the Zedboard, and be able to communicate through it.
-This took a considerable amount of time, as the information available in the internet was conflicting, or was outdated.
-I eventually was able to create a petalinux image which could bring up the ethernet interface, and allow traffic to flow through the default kernel driver.
+\par I began implementing the second Ethernet Phy on the PicoZed FMC Carrier V1, where the first
+problem was encountered. The second Ethernet Phy on the development board requires a clock
+signal for transmission of data from the FPGA, and the Ethernet Phy generates a clock signal for data
+reception to the FPGA. Both clock signals were incorrectly wired to non-clock capable pins on the
+FPGA itself because the PicoZed FMC Carrier V1 was physically manufactured incorrectly.
 
-\section{PicoZed Development Board}
+\par A solution to this problem was to use an Ethernet FPGA Mezzanine Card (FMC) which adds 4 more
+Ethernet Phys onto a development board but the same problem occurred as before. The FMC
+connector on the development board required specific clock capable pins for the Ethernet FMC to be
+routed to specific FPGA pins. This was not correctly done and two of the 4 Ethernet Phys would be
+non-functional.
 
-\par Initially, A PicoZed development board with a FMC carrier V1 was planned as the base of the project.
-Half way through the implementation of the design, it was realised that it was not suitable for the project.
-This was because the Low Pin Count (LPC) FPGA Mezzanine Card (FMC) connector on the FMC carrier card was incorrectly routed to the wrong pins on the FPGA.
-The FPGA has specific pins for allowing clock signals to pass through, called Clock Capable (CC) Pins.
-These pins have buffers on the FPGA designed to handle fast clock signals.
-The FMC Carrier card V1 did not allow for the correct Clock Capable pins to be routed to the on board ethernet phy.
-When I began testing the design, the design could not be synthesized because of this restriction, hence I changed development board to the Zedboard.
+\par This myriad of problems suggested that a change in development board would be appropriate,
+hence the Zedboard was chosen. The Zedboard has the same XC7Z020 FPGA with a single on-board
+Ethernet Phy but the clock capable pins were correctly routed to the FMC connector for the Ethernet
+FMC to expand the total number of Ethernet Phys to five.
 
-\section{Ethernet FMC card}
+\section{Current Position}
 
-\par Once the Zedboard was set up, there was minimal change to the code.
-But another problem was encountered, which was that the Ethernet FMC card would prevent the Zedboard from booting.
-This investigation is ongoing, and a new Ethernet FMC card is currently being sent to me, but it is unknown why the current card would cause these problems.
-I have a Petalinux image ready to accept the extra Ethernet phys on the Ethernet FMC card, and once the new one has arrived, the work can continue.
+\par It was recently found that the Ethernet FMC card would cause a failure to boot on the Zedboard. The
+Zedboard would function with the Ethernet FMC card installed, but when installed, the boot process
+on the Zedboard was unknowingly halted. After contacting the creator of the Ethernet FMC, it was
+concluded that the FMC card was faulty and a replacement is currently shipped and on its way to me.
 
-\section{C Implementation}
-
-\par As there were issues with the FPGA implementation, I wrote a C implementation which gets timestamps from the kernel directly.
-This was a temporary measure so that some results can be retrieved if the FPGA implementation gets too far behind.
+\par I have written a C program which does a microsecond proof-of-concept program which can be used
+to gather data if the FPGA design does not get implemented in time. It measures the time taken for a
+packet generated in C to traverse out a network interface card (NIC) and then listen on another NIC
+to receive the packet and measure the time difference between sending and receiving. This program
+achieves the same level of accuracy as any software based implementation (order of microseconds).

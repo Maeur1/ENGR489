@@ -1,44 +1,38 @@
 \chapter{Introduction}\label{C:intro}
 
-\par A core function of the internet is the ability to switch network packets from one place to another using devices called routers and switches.
-These devices receive a packet, evaluate the destination, and output to the correct next hop rapidly.
-These routers and switches are categorized by their throughput, ranging from 10mbps (megabits per second) to 100gbps (gigabits per second).
-It is common to see these marketed based on their throughput capabilities, with little to no information about what latency is present.
-Currently there are a few software packages (such as DPDK and PF\textunderscore RING) which can measure this latency to a accuracy to an order of microseconds.
-This is sufficient for most network testing applications, but for critical research areas, this accuracy is not enough.
-Once high accuracy can be achieved, then research can be done into increasing performance and reducing latency times of network switches.
-The main problem with these solutions is that there is the overhead of an operating system and the timestamp received on processed packets are delayed by a varying degree.
-
-\par To achieve high precision and accuracy of these latency measurement, a hardware implemented packet processing device would need to be devised.
+\par People today enjoy a better web experience when it has low latency. Latency is the time taken for
+information to travel from one place to another and the delay introduced by the device itself. When
+a user is accessing a website, such as Facebook, their requests traverse multiple network devices
+(physical hardware) to reach that websites’ servers. Throughout this travel, each network device
+introduces some latency, as there is processing time required to send information to the right
+destination. Although this delay is very small, over the course of multiple jumps it can become
+significant.
 
 \section{Problem}
 
-\par Presently there is no existing device that can evaluate the latency of simple switches to measure the lag that is present in these devices.
-To measure these devices, there is low level software solutions which can do long distance measurements, ranging in the milliseconds to microseconds.
-Measuring this latency to a high degree of accuracy and precision is useful to research and development purposes.
-Networking latency bottlenecks and problems can be detected if a device exists which can measure this reliably.
+\par Current software solutions can measure latency in ethernet network traffic down to a resolution of
+milliseconds and sometimes microseconds. There are no software solutions that can measure
+latency in the order of nanoseconds reliably. Measuring the latency in nanoseconds is needed as
+network switches have very low latency and the time between ingress and egress can range from
+microseconds to nanoseconds. If it could be measured accurately, then analysis could be performed
+on network traffic through network switches to research new ways to reduce latency.
 
 \section{Solution}
 
-\par As there are many software solutions to measure packet latency, a hardware implementation is needed to achieve precision and accuracy requirements.
-To achieve this, a Field Programmable Gate Array implementation can improve the precision and also accuracy of the timing.
-There is no overhead of processor clocking and also allow the flexibility of software by retrieving data in a digital format.
+\par A software based approach has the limitation that the timing functions must be processed by the
+CPU. This means the counters for timing functions could be offset from the true value. Higher
+resolution latency measurements can be achieved through a hardware implementation of a packet
+timer. This circumvents the limitations of a software based approach.
+Latency would be best measured by considering the raw electronic signals from the ethernet port on
+the device. To achieve this, microcontrollers, discrete logic gates and a Field Programmable Gate
+Array could be implemented. A microcontroller could be used but then the same issues arise, that a
+CPU clocking through instructions would deviate the true timing counter value. Another approach
+would be to use discrete logic gates, but this will become complicated very rapidly, and propagation
+delays through discrete devices would reduce the accuracy. Hence the preferred choice is to
+implement the packet latency measurement unit on a Field Programmable Gate Array (FPGA). More
+information about FPGA’s is in the Background section of the report. This way complex digital
+designs can be simplified down to a simple set of blocks, and there is no overhead that a processor
+would introduce.
 
-\par This solution was compared with two different implementations, Data Plane Development Kit (DPDK) and also PF\textunderscore RING.
-The implementation of both are software based, hence a overhead of the operating system in on the computer can introduce inconsistencies in packet timing measurements.
-
-\par Instead of a software based approach, this project aims to use a hardware based timing device.
-This device would measure the time at a hardware level, where the accuracy of the measurement deviates on the order of nanoseconds.
-The device would be implemented on a Xilinx Zedboard by Avnet\texttrademark with an Ethernet FMC expansion card (Robust Edition).
-Using the board, with the expansion card allows for low level gigabit ethernet to be probed by FPGA fabric on the Zedboard.
-The Ethernet FMC expansion card contains four gigabit ethernet phy transceivers, allowing the FPGA to send and receive network packets from four different sources at once.
-The FPGA on the Zedboard is a Xilinx Z7020 based FPGA (XC7020CLG484ACX1221) \cite{fpga}.
-This is a part from the Zynq Family of FPGAs from Xilinx, which incorporate a dual ARM core processor combined with FPGA fabric.
-To produce the high speed clocks required for the timing functions, a internal clock management system called a Mixed-Mode Clock Manager, can synthesize a higher clock rate.
-This is vital to the timing of packets, as a higher clock rate can provide the ability to measure the packet times with greater fidelity.
-
-\section{Evaluation}
-To measure the capabilities of the packet timing device, a commercially available switch can be used to do tests on.
-The method to produce the device will be engineered to ensure timing accuracy to within 1 microsecond.
-This will be verified through a loopback setup to get an approximation of what resolution can be measured.
-Data from the device would be transferred to another computer for logging to evaluate, which should produce a normal distribution to show an average packet latency.
+\par This report will focus on the work done so far in implementing a FPGA based packet latency timing
+device. This project is limited to ethernet based networks as they are most widely used.

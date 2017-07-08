@@ -1,144 +1,111 @@
 \chapter{Background}\label{C:back}
 
-\section{Previous Work}
+\section{General Networking}
 
-\section{Network packet}
-
-\par Communication between computers is established through the means of physical connections and protocols overlaying on top of this. 
-A widespread communication protocol is to break down each point of communication into discrete pieces called network packets.
-These network packets contain many layers (Figure: \ref{fig:OSIModel}) of communication information.
-Communication layers can be broken down into a few independent layers which hold specific purposes. 
-Each layer contains information which can aid with transporting the information to the correct computer securely.
-As each layer is independent, each higher layer does not affect the forthcoming layers.
-High layers of the model are for purposes such as reliability of data and the data itself in the packet.
-For the purposes of this project, an explanation of only the first three layers of the Open Systems Interconnection (OSI) model is concerned.
+Information which is sent across a network is generally divided into smaller pieces. When each piece
+traverses a network, extra information is repeatedly added and removed until it has arrived at the
+destination. This extra information is split into multiple layers and each layer has a different function.
+The Open Systems Interconnection (OSI) model (Figure: \ref{fig:OSIModel}) is a widely implemented standard that
+defines these different layers of extra information and their purpose.
 
 \begin{figure}[H]
-        \begin{center}
-                    \includegraphics[width=5cm,height=5cm,keepaspectratio]{Images/OSIModel.png}
-                            \caption{OSI Model}
-                                    \label{fig:OSIModel}
-                                        \end{center}
+    \begin{center}
+        \includegraphics[width=5cm,height=5cm,keepaspectratio]{Images/OSIModel.png}
+        \caption{OSI Model \cite{OSIPic}}
+        \label{fig:OSIModel}
+    \end{center}
 \end{figure}
 
-\subsection{Layer 1: Physical}
+Network switches and network routers interpret the destination based off information found in
+Layer 2 or Layer 3 from the OSI model, hence I must adhere to the protocol standards found at these
+layers. Layers 4 and above provide other benefits to the payload such as reliability and is not a
+concern for this project.
 
-\par The physical layer is specifying the electrical and physical medium that is used to transport individual bits from one computer to another.
-Two or more computers can be connected through many different physical mediums such as copper wiring and light fibers. 
-Each medium has specific pros and cons, from implementation costs to throughput capabilities.
-The physical layer is responsible for transmitting and receiving unstructured data.
-Communication can be either Simplex, Half Duplex or Full Duplex.
-The network topology is defined by how the physical layer is configured.
-An example of a physical medium is a copper medium is used to link two devices together.
-This project will be investigating the latency present in a Gigabit Ethernet system, using copper based medium.
+\subsection{Layer 1}
 
-\subsection{Layer 2: Data link}
+In Ethernet systems, Layer 1 refers to the physical medium that information is being sent over.
+Gigabit ethernet based systems use a copper wire as the physical medium, with electrical voltages
+representing the information. For this project, the latency is measured at this layer.
 
-\par Data link layer is responsible for node-to-node data communication. 
-It links from one device to another, determining the connection status of two physically connected devices.
-A feature of this layer, is the ability to detect and correct errors created at the physical layer.
-The IEEE Standard 802 \cite{IEEE802} details how this layer is split into two sub layers, Media Access Control (MAC), and Logical Link Control (LLC).
-This project will cover networking switches which distinguish different destination devices by their unique MAC addresses.
+\subsection{Layer 2}
 
-\subsection{Layer 3: Network}
+Layer 2 is responsible for transferring data between adjacent network devices \cite{IEEE802}. This is important as
+information will be flowing to and from adjacent nodes, through a switch or router. To ensure that
+information flows through the switch or router, this layer must be taken into consideration to ensure
+successful transmission and reception of information.
 
-\par Network layer provides functionality when sending data across a network.
-End-to-end communication is aided by assigning each node in the network an address, which it identifies itself with.
-This allows data to be passed through intermediate nodes, which would continue to traverse until the target node has been reached.
-This project will not be including this layer, or any others higher than this, as the latency measurements involved are short, single node-to-node distances.
+\subsection{Layer 3}
 
-\section{Network Latency}
+Information from one hop to another is determined by the Layer 3 protocol. This ensures that
+information is correctly routed to the destination from the source. This layer is important as the
+information stored at this layer ensures the correct path is taken from sender to receiver. This is
+different to Layer 2, as this can incorporate non-adjacent nodes as well.
 
-\par As network operations are discretized, there is a delay between splitting data and information into pieces, then gathering this information again.
-Each layer of the networking OSI model, a new piece of information is added to the discrete pieces.
-The process of adding this information, and also removing it, causes delays in processing information.
-The latency of a packet can be defined in many ways, for the purposes of this project, latency will be defined as the time from one node to another.
+\section{Latency Definitions}
+
+Latency in a network can be defined in many ways, the following a few that are relevant to this
+project.
 
 \subsection{Connection Time}
 
-\par Connection time is defined to be the time that one end of a connection has been established with another end.
-Only once the connection has been established, can information from one end flow to the other.
-Many synchronization procedures and exchanging of information takes place when a link is brought up.
-These procedure produces a delay, which can be measured to be the latency of a link.
-This timing procedure is common for higher layer protocols, where security and authentication could be an issue.
+Connection time is the time that two devices take to enable information flow between them. In
+some cases, there are many synchronisation and authentication steps that need to take place before
+any information can flow. This latency is defined as the initialization of the first command, to the
+processing of the final command.
 
-\subsection{Round Trip Time}
+\subsection{Return Trip Time}
 
-\par Information sent from one place to another can be measured as time taken for a response to be sent from the other end of the link.
-This can be measured by sending a packet from an end of a link, to the other requesting a response, and measuring the time taken for the response.
-Half the round trip time can be inferred to be the latency of a link.
+In some cases, the return trip time can be used to measure the one-way latency of two devices. One
+device sends a request for an echo and when received, the time taken from transmit to receive is
+twice the latency between devices.
 
-\section{Switching Techniques}
+\subsection{One way Trip Time}
 
-\par Network packet switches can switch network packets using different techniques.
-Each technique has the ability to reduce packet latency, or increase reliability. 
-Some techniques cannot work at all on specific data protocols.
-Modern switches can achieve latency times ranging from hundreds of nanoseconds to tens of microseconds.
-A big factor for the latency timing is how many transmitting devices are reaching the same receiver.
+Similar to Return Trip Time but instead of requiring an echo back to the sender, the receiver is on the
+same device. Hence the latency of the connection is measured as the time taken for the information
+to flow from one port on the device to another.
 
-\begin{figure}[H]
-        \begin{center}
-                    \includegraphics[width=7cm,keepaspectratio]{Images/SwitchingTechniques.png}
-                            \caption{Packet Timing from different switching techniques \cite{latencyinethernet}}
-                                    \label{fig:PacketTiming}
-                                        \end{center}
-\end{figure}
+\section{Current Solutions}
 
-\subsection{Cut-Through}
+\subsection{Ping}
 
-\par Cut-Through switching is a latency reducing switching technique. 
-Each transaction begins processing each network packet as soon as it is beginning to be transferred into the switch.
-Once enough information is received to know which destination device it is, it begins forwarding information to the next hop.
-This technique can only operate on data which has a header for the destination at the beginning of the packet.
+Ping is a Linux utility that can be used to estimate the latency to a given network server. This is for
+large distance measurements, as the accuracy of this ranges from seconds to milliseconds. This does
+not meet the need of having the ability to measure time in the nanosecond range.
 
-\subsection{Store-and-Forward}
+\subsection{Data plane Development Kit (DPDK)}
 
-\par Switching data occasionally requires information which is embedded deep within the packet, hence header data cannot provide which device to transmit to.
-A technique to process this data is called Store-and-Forward, where the whole packet is digested by the switch to determine the destination.
-As this requires time to receive data, process, then send this data, it does not have the same latency-reducing effect as Cut-Through does.
-
-\section{Current Timing Solutions}
-
-\par Timing of network packets can currently done through a utility called Ping, but it was not meant for accurate measurements \cite{pingisbad}.
-For this reason, there are many software implementations that allow high speed packet processing.
-The following software implementations have some restrictions on what hardware they can run on.
-The precision to measure the latency of packets is unknown and needs to be investigated.
-This project is to combine the flexibility of software and hardware to create a packet latency measurement utility.
-
-\subsection{Precision Time Protocol (PTP)}
-
-Precision Time Protocol is a protocol design for synchronizing the clocks in a network of computers.
-Precision of the protocol that can be achieved is in the sub-microseconds \cite{ieee1588}. 
-This protocol is implemented on a variety of devices, but is still limited by resolution of the processor.
-
-\subsection{Data Plane Development Kit (DPDK)}
-
-\par Data Plane Development Kit (DPDK) is a set of C libraries to allow for rapid processing of network packets.
-It utilizes a few low level Application Programming Interfaces (APIs) to minimize the overhead of using a specific architecture computer.
-Reducing this overhead of the CPU reduces the amount of latency present in the act of measuring the time between packets itself.
-This is a very good software solution to what is currently on the market, but one caveat to using this technology is that only specific hardware can be used.
-The Network Interface Card (NIC) on the computer has to be compatible with the software.
+DPDK is a software implementation of rapid packet processing. This software utilises low level
+software drivers to interact directly with the hardware. Doing so requires specific hardware on the
+computer which needs to be compatible with the software itself. Reducing the packet processing
+time reduces the time offset created by the CPU, but not fully removes it. This does not meet the
+requirements to have the ability to measure time on a nanosecond scale.
 
 \subsection{PF\textunderscore RING}
 
-\par PF\textunderscore RING by ntop\texttrademark is a software solution for rapid network packet processing.
-It is a network socket technology which improves the speed at which packets are captured by the processor.
-Faster packet processing ensures that the time stamp placed on an ingress packet is accurate as it can be.
-This is a software solution which could potentially work well, but is limited by the software latency of needing to be processed by a processor.
-The NIC on the computer does not have to be a specific model, meaning this is a much more flexible solution.
+Another software solution is PF\textunderscore RING. It is a rapid packet processing library but does not require the
+need for specific hardware. This is less accurate than the DPDK but increases the flexibility of the
+platform it can implemented on. As with all software based approaches, this does not meet the
+requirements of being able to measure time in nanoseconds.
 
+\subsection{Data Acquisition and Generation (DAG) 7.5G4}
+
+The DAG 7.5G4 by Endace is a hardware based packet capturing solution with high precision
+nanosecond scale precision. This is a physical device which connects to a x86 based computer and
+communicates via Peripheral Component Interconnect Express (PCIe). It is an expansion card for a
+computer which extends the capabilities of the computer to accurately capture and timestamp
+packets to a high degree. This device has the capabilities to timestamp packets with a resolution of
+15ns. This meets all the requirements of the project but is very costly (A Higher model DAG 10x2-S is
+reportedly \$ 2500 USD) and methods for obtaining a device can only be done through Endace
+themselves.
 
 \section{Field Programmable Gate Array (FPGA)}
 
-\par Many implementations of measuring packet latency require processors and are limited to timing based off clock cycles from a processor.
-Field Programmable Gate Array (FPGA) is a system of intertwined sets of logic gates, with configurable links between them.
-This has the advantage of being able to create complex digital circuits with no need for a clock signal.
-This means no processor is involved with timing critical operations.
-Timing is dependant on the speed of the input clock and the limitations of the Gate Array Fabric.
-
-\subsection{Reconfigurable Macro Cells}
-
-\par Sets of logic gates in a FPGA are called Macro Cells. 
-These sets of logic gates are reconfigurable to select which logic operation takes place through the cell, and also what the inputs are.
-Some Macro Cells have specific capabilities, such as the ability to generate a clock signal, or receive a clock signal reliably.
-Each Cell receives information about configuration from Flash memory embedded on the board nearby.
+A FPGA is an array of configurable logic gates. The number of gates are in the order of thousands to
+millions. This many configurable gates allows for complex logical structures and digital circuits to be
+implemented in hardware, while consuming little physical space. This differs from a CPU, where the
+logical gate circuitry is fixed, and manipulation of electrical Input/output must be done by clocking
+through an instruction set. Without the need for an instruction set, FPGAs allow for high speed time
+critical applications to be implemented without the overhead of needing to clock through CPU
+instructions. This is important characteristic as the electrical signals measured from the network
+interfaces are time critical.

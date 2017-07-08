@@ -1,16 +1,13 @@
 \chapter{Next Steps}\label{C:nextSteps}
 
-\section{FPGA Design}
+\section{FPGA Intellectual Property (IP) Creation}
 
-Continuing with the FPGA design, some work needs to be done.
-I have begun work on the block design required by the FPGA software.
-This block design will measure the time between two pulses, and store the value in memory.
-Once this block is complete, it will need to be wired between two ethernet block designs (the ingress and egress ports).
-This block will store the delta between two clock pulses into memory.
-The memory location will then be accessible by the Linux operating system and then stored in a file, for examination.
+\par A custom Intellectual Property block for the timing functions needs to be created. This will measure
+the time taken between two ethernet ports, and store the value into a register which is accessible by
+the ARM core present on the FPGA. This allows for ease of accessing through a Linux subsystem.
 
-\section{Testing}
+\section{Testing and Analysis of Results}
 
-The network engineering department at Victoria University has some network switches that I can test with my device.
-These switches range from inexpensive basic switches from stores, to very expensive and fast switches for research.
-I want to test these switches to compare the difference in latency of packets.
+\par Once the timing system is functional, test will need to be done on network switches to measure the
+packet timing. Analysis will then be done on the information to understand how some network
+switches reduce latency compared with others.
