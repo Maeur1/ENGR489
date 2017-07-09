@@ -16,6 +16,8 @@
 
 \usepackage{xspace} % space after trademarks specifically
 
+\usepackage{pdfpages}
+
 \let\OldTexttrademark\texttrademark
 \renewcommand{\texttrademark}{\OldTexttrademark\xspace}%
 \setlength{\parskip}{1em}
@@ -109,8 +111,12 @@ A short description of the project goes here.
 
 
 %\bibliographystyle{ieeetr}
+\begingroup
+\raggedright
 \bibliography{references}{}
 \bibliographystyle{ieeetr}
+\endgroup
 
+\include{appendix}
 
 \end{document}

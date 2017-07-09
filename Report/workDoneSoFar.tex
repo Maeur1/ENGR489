@@ -46,6 +46,8 @@ FMC to expand the total number of Ethernet Phys to five.
 
 \section{Current Position}
 
+\par Currently the Ethernet FMC block design (Appendix: \ref{appendix:blockdesign}) has been compiled, and work is needing to be done is to integrate in custom logic for the timer. The value from the timer can be retrieved by the ARM based Linux subsystem and saved to a file for future analysis. 
+
 \par It was recently found that the Ethernet FMC card would cause a failure to boot on the Zedboard. The
 Zedboard would function with the Ethernet FMC card installed, but when installed, the boot process
 on the Zedboard was unknowingly halted. After contacting the creator of the Ethernet FMC, it was

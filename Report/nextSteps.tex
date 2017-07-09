@@ -1,13 +1,12 @@
 \chapter{Next Steps}\label{C:nextSteps}
 
-\section{FPGA Intellectual Property (IP) Creation}
+\par A custom Intellectual Property block for the timing functions needs to be created. This will measure the time taken between two ethernet ports, and store the value into a register which is accessible by the ARM core present on the FPGA. This allows for ease of accessing through a Linux subsystem.
+I am aiming for this to be done within 2 weeks into trimester 2. This is because I should theoretically have a low workload from my papers in the first few weeks, and I can focus on the project more than anything else.
+Once the initial design is ready for testing, I can deploy it to a device and test with real hardware to see how well it can measure timings between packets.
+I feel the need to speed up this work as I will have a lot of work to do from my other papers as they are very practical based papers.
 
-\par A custom Intellectual Property block for the timing functions needs to be created. This will measure
-the time taken between two ethernet ports, and store the value into a register which is accessible by
-the ARM core present on the FPGA. This allows for ease of accessing through a Linux subsystem.
-
-\section{Testing and Analysis of Results}
-
-\par Once the timing system is functional, test will need to be done on network switches to measure the
-packet timing. Analysis will then be done on the information to understand how some network
-switches reduce latency compared with others.
+\par Once the timing system is functional, tests will need to be done on network switches to measure the packet timing.
+Analysis will then be done on the information to understand how some network switches reduce latency compared with others. 
+This analysis of the data will be ensuring the reliability and repeatability of the tests. 
+After tests and analysis has been performed, work shall begin on the final report and presentation.
+I am aiming for this to happen in the second half of the trimester.
