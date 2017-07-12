@@ -2,12 +2,12 @@
 
 \par The FPGA chosen to implement a packet timing unit is a XC7Z020 Zynq-7000 FPGA by Xilinx. This
 FPGA was chosen as it is a modern part that has a large amount of supporting documentation online
-and expertise for the platform was locally available at the University, should I need some assistance
+and expertise for the platform is locally available at the University, should I need some assistance
 with the project.
 
 \par To develop for this FPGA, a development board is required as there are many additional components
-that needed for development of this project. This includes flash memory, Random Access Memory
-(RAM), Universal Asynchronous Receiver/Transmitter (UART) and an Ethernet Physical Transceiver
+that are needed for the development of this project. This includes flash memory, Random Access Memory
+(RAM), an Universal Asynchronous Receiver/Transmitter (UART) and an Ethernet Physical Transceiver
 (Ethernet Phy). Initially the project was to be implemented on a PicoZed Z7020 System-On-a-Module
 (SOM) combined with a PicoZed FMC Carrier V1, for its dual on board ethernet port capabilities (one
 can serve as input, other as output), but was later changed to a Zedboard for reasons discussed
@@ -21,7 +21,7 @@ HDL's supported by Xilinx, so little time was needed learning the language.
 \section{Xilinx University Program (XUP)}
 
 Xilinx provides FPGA toolchain tutorials from which I learned how to construct a basic FPGA design in
-software called Vivado. The tutorials in the program were targeted to a Zedboard (Different FPGA
+a software called Vivado. The tutorials in the program were targeted to a Zedboard (Different FPGA
 development board), so modifications had to be done to ensure the design was compatible with the
 PicoZed Z7020 SOM on the PicoZed FMC Carrier V1.
 
@@ -46,7 +46,7 @@ FMC to expand the total number of Ethernet Phys to five.
 
 \section{Current Position}
 
-\par Currently the Ethernet FMC block design (Appendix: \ref{appendix:blockdesign}) has been compiled, and work is needing to be done is to integrate in custom logic for the timer. The value from the timer can be retrieved by the ARM based Linux subsystem and saved to a file for future analysis. 
+\par Currently the Ethernet FMC block design (Appendix: \ref{appendix:blockdesign}) has been compiled, and work that needs to be done is to integrate in custom logic for the timer. The value from the timer can be retrieved by the ARM based Linux subsystem and saved to a file for future analysis. 
 
 \par It was recently found that the Ethernet FMC card would cause a failure to boot on the Zedboard. The
 Zedboard would function with the Ethernet FMC card installed, but when installed, the boot process

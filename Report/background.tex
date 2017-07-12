@@ -47,7 +47,7 @@ Latency in a network can be defined in many of the following ways. These are imp
 
 \subsection{Connection Time}
 
-Connection time is the time that two devices take to enable information flow between them. In
+Connection time describes the time that two devices take to enable information flow between them. In
 some cases, there are many synchronisation and authentication steps that need to take place before
 any information can flow. This latency is defined as the initialization of the first command, to the
 processing of the final command.
@@ -55,25 +55,27 @@ processing of the final command.
 \subsection{Return Trip Time}
 
 In some cases, the return trip time can be used to measure the one-way latency of two devices. One
-device sends a request for an echo and when received, the time taken from transmit to receive is
+device sends a request for an echo and when the echo is recieved, the time taken from transmition to reception is
 twice the latency between devices.
 
 \subsection{One way Trip Time}
 
-Similar to Return Trip Time but instead of requiring an echo back to the sender, the receiver is on the
+This is similar to Return Trip Time but instead of requiring an echo back to the sender, the receiver is on the
 same device. Hence the latency of the connection is measured as the time taken for the information
 to flow from one port on the device to another.
 
 \section{Current Solutions}
 
-\subsection{Ping}
+\subsection{Software}
+
+\subsubsection{Ping}
 
 Ping is a Linux utility that can be used to estimate the latency to a given network server. 
 This is for large distance measurements, as the accuracy of this ranges from seconds to milliseconds. 
 It has also been tested that this utility is unreliable for performance extensive testing as momentary ‘glitches’ can appear in networks, causing random and unpredictable results \cite{pingisbad}.
 This does not meet the need of having the ability to measure time in the nanosecond range.
 
-\subsection{Data plane Development Kit (DPDK)}
+\subsubsection{Data plane Development Kit (DPDK)}
 
 DPDK is a software implementation of rapid packet processing. 
 This software utilises low level software drivers to interact directly with the hardware. 
@@ -81,7 +83,7 @@ Doing so requires specific hardware on the computer which needs to be compatible
 Reducing the packet processing time reduces the time offset created by the CPU, but not fully removes it. 
 Examples in the source code have shown that the timing value is dependent on CPU frequencies \cite{dpdkcode} and Dynamic Frequency scaling \cite{turboboost} of modern CPUs can cause a change in this frequency at any time.
 
-\subsection{PF\textunderscore RING}
+\subsubsection{PF\textunderscore RING}
 
 Another software solution is PF\textunderscore RING by ntop\texttrademark. 
 It is a rapid packet processing library that does not require the need for specific hardware.  
@@ -90,7 +92,9 @@ This library is more focused on throughput of packets processed rather than late
 This is less accurate than the DPDK but increases the flexibility of the platform it can implemented on. 
 As with all software based approaches, this does not meet the requirements of being able to measure time in nanoseconds reliably.
 
-\subsection{Data Acquisition and Generation (DAG) 10x2-S}
+\subsection{Hardware}
+
+\subsubsection{Data Acquisition and Generation (DAG) 10x2-S}
 
 The DAG 10x2-S by Endace is a hardware based packet capturing solution with high precision nanosecond scale precision \cite{dagprecision}. 
 This is a physical device which connects to a x86 based computer and communicates via Peripheral Component Interconnect Express (PCIe). 
@@ -107,7 +111,7 @@ implemented in hardware, while consuming little physical space. This differs fro
 logical gate circuitry is fixed, and manipulation of electrical Input/output must be done by clocking
 through an instruction set. Without the need for an instruction set, FPGAs allow for high speed time
 critical applications to be implemented without the overhead of needing to clock through CPU
-instructions. This is important characteristic as the electrical signals measured from the network
+instructions. This is an important characteristic as the electrical signals measured from the network
 interfaces are time critical.
 
 \subsection{Xilinx Zynq FPGA}
