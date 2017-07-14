@@ -11,6 +11,10 @@ significant.
 
 \section{Problem}
 
+\par There has been research dedicated to reducing latency. Some ways to reduce this latency include making “smart” network routers \cite{smartrouters} and low latency wireless systems \cite{5g}. 
+This research is reaching the point where network traffic can have latency as little as 1ms \cite{lessthan1ms} or below.
+To advance further, new tools need to have the capability of measuring this latency.
+
 \par Current software solutions can measure latency in ethernet network traffic down to a resolution of
 milliseconds and sometimes microseconds \cite{pingisbad}. There are no software solutions that can measure
 latency in the order of nanoseconds reliably \cite{timeinlinux}. Measuring the latency in nanoseconds is needed as
@@ -34,8 +38,8 @@ reduction. Improvements cannot be done without knowing how much this can improve
 
 \section{Solution}
 
-\par A software based approach has the limitation that the timing functions must be processed by the
-CPU. This means the counters for timing functions could be offset from the true value. Higher
+\par A software based approach has the limitation that the timing functions must be processed by a
+CPU \cite{CPUtiming}. This means the counters for timing functions could be offset from the true value. Higher
 resolution latency measurements can be achieved through a hardware implementation of a packet
 timer. This circumvents the limitations of a software based approach.
 Latency would be best measured by considering the raw electronic signals from the ethernet port on
