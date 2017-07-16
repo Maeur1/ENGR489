@@ -75,7 +75,8 @@ to flow from one port on the device to another.
 Ping is a Linux utility that can be used to estimate the latency to a given network server. 
 This is for large distance measurements, as the accuracy of this ranges from seconds to milliseconds. 
 It has also been tested that this utility is unreliable for performance extensive testing as momentary ‘glitches’ can appear in networks, causing random and unpredictable results \cite{pingisbad}.
-This does not meet the need of having the ability to measure time in the nanosecond range.
+It is very useful at measuring very large latencies (>1 milliseconds) and displaying them in a concise format for analysis by the user. 
+This does not meet the need of having the ability to measure time in the nanosecond range, but a useful takeaway is to make sure that values are presented in an easy to analyse format (printing to screen, or to a file).
 
 \subsubsection{Data plane Development Kit (DPDK)}
 
@@ -84,6 +85,8 @@ This software utilises low level software drivers to interact directly with the 
 Doing so requires specific hardware on the computer which needs to be compatible with the software itself.
 Reducing the packet processing time reduces the time offset created by the CPU, but not fully removes it. 
 Examples in the source code have shown that the timing value is dependent on CPU frequencies \cite{dpdkcode} and Dynamic Frequency scaling \cite{turboboost} of modern CPUs can cause a change in this frequency at any time.
+An advantage of this solution is that it can produce a high-resolution time value (in the order of nanoseconds) and is easily accessible by a user in software for processing and analysing. 
+A lesson learnt from this approach is that a CPU based system for measuring high resolution timers will not be precise or accurate.
 
 \subsubsection{PF\textunderscore RING}
 
@@ -93,21 +96,22 @@ PF\textunderscore RING allows for more efficient packet capturing and filtering 
 This library is more focused on throughput of packets processed rather than latency. 
 This is less accurate than the DPDK but increases the flexibility of the platform it can implemented on. 
 As with all software based approaches, this does not meet the requirements of being able to measure time in nanoseconds reliably.
+An insight from this approach is to flexibility of platform is good for users but will not be a requirement for this project.
 
 \subsection{Hardware}
 
 \subsubsection{Data Acquisition and Generation (DAG) 10x2-S}
 
-The DAG 10x2-S by Endace is a hardware based packet capturing solution with high precision nanosecond scale precision \cite{dagprecision}. 
+\par The DAG 10x2-S by Endace is a hardware based packet capturing solution with high precision nanosecond scale precision \cite{dagprecision}. 
 This is a physical device which connects to a x86 based computer and communicates via Peripheral Component Interconnect Express (PCIe). 
 The DAG 10x2-S is recommended for capturing network packets over gigabit ethernet links, as the other models cost more and have other unnecessary features \cite{dagfeatures}.
 It is an expansion card for a computer which extends the capabilities of the computer to accurately capture and timestamp packets to a high degree. 
 This device has the capabilities to timestamp packets with a resolution of 4ns \cite{dagprecision}. 
 This meets all the requirements of the project but is very costly (\$2500 USD \cite{dagprice}) and methods for obtaining a device can only be done through Endace themselves. 
 
-\section{Field Programmable Gate Array (FPGA)}
+\subsubsection{Field Programmable Gate Array (FPGA)}
 
-A FPGA is an array of configurable logic gates. The number of gates are in the order of thousands to
+\par A FPGA is an array of configurable logic gates. The number of gates are in the order of thousands to
 millions. This many configurable gates allows for complex logical structures and digital circuits to be
 implemented in hardware, while consuming little physical space. This differs from a CPU, where the
 logical gate circuitry is fixed, and manipulation of electrical Input/output must be done by clocking
@@ -116,7 +120,15 @@ critical applications to be implemented without the overhead of needing to clock
 instructions. This is an important characteristic as the electrical signals measured from the network
 interfaces are time critical.
 
-\subsection{Xilinx Zynq FPGA}
+\subsubsection{NetFPGA-SUME Virtex-7 FPGA Development Board}
+
+\par The NetFPGA-SUME is a FPGA development board for high density and high-performance networking design.
+This incorporates a FPGA to process packets rapidly in hardware, much faster than any software.
+The Virtex-7 FPGA onboard is a recently released FPGA which can process up to 13.1 gigabits per second worth of information through its transceivers while the scope of this project is limited to 1 gigabit per second ethernet.
+This is also a very costly development board, costing \$4999 \cite{SUME} for academic customers. 
+Due to the limited scope of this project and the cost involved with purchasing this development board, this is not a suitable platform for developing latency measuring device.
+
+\subsubsection{Xilinx Zynq FPGA}
 
 Xilinx is a manufacturer of FPGAs, and a family of products they produce is the Zynq-7000 range \cite{fpga}.
 These FPGAs integrate a dual-core ARM Cortex-A9 MPCore with FPGA gate fabric enabling high performance applications to run on the FPGA, while embedded programs can run on the ARM cores.
