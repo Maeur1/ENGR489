@@ -1,0 +1,57 @@
+\chapter{Introduction}\label{C:intro}
+
+\par Fast internet connections are becoming more and more desired as high bandwidth media consumption and internet based services grow in popularity. 
+Speed of an internet connection can be separated into two distinct metrics, latency and bandwidth. 
+Latency is the time taken for information to travel from one place to another and the delay introduced by the device itself, while bandwidth is the amount of information that can flow reliably from end to end.
+When a user is accessing a website, such as Facebook, their requests traverse multiple network devices
+(physical hardware) to reach that websites’ servers. Throughout this travel, each network device
+introduces some latency, as there is processing time required to send information to the right
+destination. Although this delay is very small, over the course of multiple jumps it can become
+significant.
+
+\section{Problem}
+
+\par There has been research dedicated to reducing latency. Some ways to reduce this latency include making “smart” network routers \cite{smartrouters} and low latency wireless systems \cite{5g}. 
+This research is reaching the point where network traffic can have latency as little as 1ms \cite{lessthan1ms} or below.
+To advance further, new tools need to have the capability of measuring this latency.
+
+\par Current software solutions can measure latency in ethernet network traffic down to a resolution of
+milliseconds and sometimes microseconds \cite{pingisbad}. There are no software solutions that can measure
+latency in the order of nanoseconds reliably \cite{timeinlinux}. Measuring the latency in nanoseconds is needed as
+network switches have very low latency and the time between ingress and egress can range from
+microseconds to nanoseconds. If it could be measured accurately, then analysis could be performed
+on network traffic through network switches to research new ways to reduce latency.
+
+\par A reduction in network latency would be a huge boon to future technologies. For example, less
+latency in video streaming can enable doctors from remote locations to perform surgery with
+minimal lag between actions and responses \cite{remotesurgery}. The stock market is another example of improvement with
+this technology, as less latency ensures that stock market trade deals can be completed faster.
+
+\begin{quote}
+    \centering
+    ``We are running through the United States with dynamite and rock saws, so that an algorithm can
+    run three microseconds faster.`` \em --- Kevin Slavin, How Algorithms shape our world \cite{tedTalkAlgorithms}
+\end{quote} 
+
+Many improvements made at a nanosecond scale cam add up to microseconds or even milliseconds of latency
+reduction. Improvements cannot be done without knowing how much this can improve by without the tools to measure it.
+
+\section{Solution}
+
+\par A software based approach has the limitation that the timing functions must be processed by a
+Central Processing Unit (CPU) \cite{CPUtiming}. This means the counters for timing functions could be offset from the true value. Higher
+resolution latency measurements can be achieved through a hardware implementation of a packet
+timer. This circumvents the limitations of a software based approach.
+Latency would be best measured by considering the raw electronic signals from the ethernet port on
+the device. To achieve this, microcontrollers, discrete logic gates and a Field Programmable Gate
+Array could be implemented. A microcontroller could be used but then the same issues arise, that a
+CPU clocking through instructions would deviate the true timing counter value. Another approach
+would be to use discrete logic gates, but this will become complicated very rapidly, and propagation
+delays through discrete devices would reduce the accuracy. Hence the preferred choice is to
+implement the packet latency measurement unit on a Field Programmable Gate Array (FPGA). More
+information about FPGA’s is in the Background section of the report. This way complex digital
+designs can be simplified down to a simple set of blocks, and there is no overhead that a processor
+would introduce.
+
+\par This report will focus on the work done so far in implementing a FPGA based packet latency timing
+device. This project is limited to ethernet based networks as they are most widely used \cite{etherneteverywhere}.
