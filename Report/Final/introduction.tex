@@ -6,7 +6,7 @@ Latency is the time taken for information to travel from one place to another an
 When a user is accessing a website, such as Facebook, their requests traverse multiple network devices
 (physical hardware) to reach that websites’ servers. Throughout this travel, each network device
 introduces some latency, as there is processing time required to send information to the right
-destination. Although this delay is very small, over the course of multiple jumps it can become
+destination. Although this delay is very small, over the course of multiple hops it can become
 significant.
 
 \section{Problem}
@@ -15,6 +15,10 @@ significant.
 This research is reaching the point where network traffic can have latency as little as 1ms \cite{lessthan1ms} or below.
 To advance further, new tools need to have the capability of measuring this latency.
 
+\par Existing hardware solutions to measuring latency are capable of measuring less than 1ms.
+These require some additional training in the software suite provided with the hardware\cite{dagfeatures}, or existing systems to extend capabilites to.
+This drives the cost of using the device up, in terms of both time and money as learning the software suite takes time too.
+
 \par Current software solutions can measure latency in ethernet network traffic down to a resolution of
 milliseconds and sometimes microseconds \cite{pingisbad}. There are no software solutions that can measure
 latency in the order of nanoseconds reliably \cite{timeinlinux}. Measuring the latency in nanoseconds is needed as
@@ -22,8 +26,10 @@ network switches have very low latency and the time between ingress and egress c
 microseconds to nanoseconds. If it could be measured accurately, then analysis could be performed
 on network traffic through network switches to research new ways to reduce latency.
 
-\par Existing methods to measure latency within microseconds and nanoseconds require monolithic processes which can
-include setting up and installing device drivers, proprietary software, or even a replacement of existing hardware systems.
+\par Existing methods to measure latency within microseconds and nanoseconds require monolithic devices which need setting up and installing device drivers, proprietary software, or even a replacement of existing hardware systems.
+Once setup, these devices are often require data conversion of results to be compatible with data analysis methods and evaluation programs. 
+Occasionally these programs are embedded within in manufacturers software, but the user is limited to what the manufacturer has chosen as relevant outputs for the user.
+These can be useful most of the time, but occassionally the user would need to export the data to another data analysis tool they are familiar with for futher processing.
 This inflexibility is prominent in many high end network performance analysis tools, causing delays in retrieving test results for evaluation.
 
 \par A reduction in network latency would be a huge boon to future technologies. For example, less
@@ -37,15 +43,16 @@ this technology, as less latency ensures that stock market trade deals can be co
     run three microseconds faster.`` \em --- Kevin Slavin, How Algorithms shape our world \cite{tedTalkAlgorithms}
 \end{quote} 
 
-Many improvements made at a nanosecond scale cam add up to microseconds or even milliseconds of latency
+\par Many improvements made at a nanosecond scale cam add up to microseconds or even milliseconds of latency
 reduction. Improvements cannot be done without knowing how much this can improve by without the tools to measure it.
-
-\section{Solution}
 
 \par A software based approach has the limitation that the timing functions must be processed by a
 Central Processing Unit (CPU) \cite{CPUtiming}. This means the counters for timing functions could be offset from the true value. Higher
 resolution latency measurements can be achieved through a hardware implementation of a packet
 timer. This circumvents the limitations of a software based approach.
+
+\section{Solution}
+
 Latency would be best measured by considering the raw electronic signals from the ethernet port on
 the device. To achieve this, microcontrollers, discrete logic gates and a Field Programmable Gate
 Array could be implemented. A microcontroller could be used but then the same issues arise, that a
