@@ -57,12 +57,14 @@ Latency would be best measured by considering the raw electronic signals from th
 the device. To achieve this, microcontrollers, discrete logic gates and a Field Programmable Gate
 Array could be implemented. A microcontroller could be used but then the same issues arise, that a
 CPU clocking through instructions would deviate the true timing counter value. Another approach
-would be to use discrete logic gates, but this will become complicated very rapidly, and propagation
-delays through discrete devices would reduce the accuracy. Hence the preferred choice is to
-implement the packet latency measurement unit on a Field Programmable Gate Array (FPGA). More
-information about FPGA’s is in the Background section of the report. This way complex digital
-designs can be simplified down to a simple set of blocks, and there is no overhead that a processor
-would introduce.
+would be to use discrete logic gates to measure the timing accurately, but this will become 
+complicated very rapidly, and propagation delays through discrete devices would reduce the 
+accuracy. Hence the preferred choice is to implement the packet latency measurement unit on 
+a Field Programmable Gate Array (FPGA). More information about FPGA’s is in the Background 
+section of the report. This way complex digital designs can be simplified down to a simple 
+set of blocks, and there is no overhead that a processor would introduce. The drawback to using an
+FPGA is that the learning curve to developing on the platform is quite steep, and also communication with 
+existing systems is difficult and is usually aided by the use of a microcontroller (such as an ARM or x86 based co-processor)
 
 \par This report will focus on the work done so far in implementing a FPGA based packet latency timing
 device. This project is limited to ethernet based networks as they are most widely used \cite{etherneteverywhere}.
