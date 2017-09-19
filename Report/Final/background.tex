@@ -66,38 +66,6 @@ This is similar to Return Trip Time but instead of requiring an echo back to the
 same device. Hence the latency of the connection is measured as the time taken for the information
 to flow from one port on the device to another.
 
-\section{Hardware Implementation}
-
-\subsection{Differential Signaling}
-Differential Signalling is a method of electrical communication using opposing electrical voltages on two wires. This is advantageous in transmission of electrical signals in electrically noisy environments as no reference point is used to infer information. If a reference point is used in an electrically noisy environment, the noise can couple to the reference point, causing errors in the information transferred. Differential signalling removes this dependency on a reference point by transferring information through the difference between the two transmission lines. By twisting the transmission lines together, external electrical signals are coupled to both lines, and do not affect the difference between the two lines. This way information is transferred over a large distance reliably and at high speed. In Gigabit Ethernet, information is transferred through 4 pairs of twisted differential paired cables.
-
-\subsection{Pulse Amplitude Modulation}
-Pulse Amplitude modulation is a form of modulating a signal with information encoded in discrete levels of pulses. Different versions of PAM have varying levels of discrete steps. In Gigabit Ethernet, PAM-5 is used with 5 different voltage levels each corresponding to different set of predefined binary codes interpreted by the decoder.
-
-\subsection{IEEE 802.3ab}
-IEEE 802.3ab is the defining standard for gigabit ethernet communication across a copper link. It defines the use of 4 pairs of copper and the maximum length (100 m) the protocol is designed for.
-Ethernet Physical Transceiver (Ethernet PHY)
-An Ethernet PHY is an electronic component used to convert signalling from a link layer device (Such as a MAC) to the physical layer (differential signalling with PAM). Common interfaces to communicate from a MAC to a PHY include GMII, RGMII, XGMII.
-
-\subsection{Gigabit Media Independent Interface (GMII)}
-GMII is a protocol used in this project to communicate between the Ethernet PHY and the MAC which is implemented on the FPGA. The ethernet PHY decodes the data sent from the GMII interface, and produces the correct signalling required for the receiving Etherenet PHY. The process of clocking out data requires 8 data line connections, and a few extra lines for timing/scheduling.
-
-\subsection{RGMII}
-
-\subsection{Advanced Microcontroller Bus Architecture}
-
-\subsection{Advanced eXtensible Interface}
-
-\subsection{Serial Peripheral Interface}
-
-\section{Related Work}
-
-\subsection{Moongen}
-
-\subsection{Flexible High Performance Traffic Generation on Commodity Multi–Core Platforms}
-
-\subsection{A Distributed Instrument for Performance Analysis of Real-Time Ethernet Networks}
-
 \section{Current Solutions}
 
 \subsection{Software}
@@ -156,12 +124,66 @@ interfaces are time critical.
 
 \par The NetFPGA-SUME is a FPGA development board for high density and high-performance networking design.
 This incorporates a FPGA to process packets rapidly in hardware, much faster than any software.
-The Virtex-7 FPGA onboard is a recently released FPGA which can process up to 13.1 gigabits per second worth of information through its transceivers while the scope of this project is limited to 1 gigabit per second ethernet.
+The Virtex-7 FPGA onboard is a recently released FPGA which can process up to 13.1 gigabits per second worth 
+of information through its transceivers while the scope of this project is limited to 1 gigabit per second 
+ethernet.
 This is also a very costly development board, costing \$4999 \cite{SUME} for academic customers. 
-Due to the limited scope of this project and the cost involved with purchasing this development board, this is not a suitable platform for developing latency measuring device.
+Due to the limited scope of this project and the cost involved with purchasing this development board, this is 
+not a suitable platform for developing latency measuring device.
 
 \subsubsection{Xilinx Zynq FPGA}
 
 Xilinx is a manufacturer of FPGAs, and a family of products they produce is the Zynq-7000 range \cite{fpga}.
-These FPGAs integrate a dual-core ARM Cortex-A9 MPCore with FPGA gate fabric enabling high performance applications to run on the FPGA, while embedded programs can run on the ARM cores.
-This project incorporates the FPGA section to manage the timing functions and the ARM section to run the application for storing the timing information.
+These FPGAs integrate a dual-core ARM Cortex-A9 MPCore with FPGA gate fabric enabling high performance 
+applications to run on the FPGA, while embedded programs can run on the ARM cores.
+This project incorporates the FPGA section to manage the timing functions and the ARM section to run the 
+application for storing the timing information.
+
+\section{Related Work}
+
+\subsection{Moongen}
+
+\subsection{Flexible High Performance Traffic Generation on Commodity Multi–Core Platforms}
+
+\subsection{A Distributed Instrument for Performance Analysis of Real-Time Ethernet Networks}
+
+\section{Hardware Implementation}
+
+\subsection{Differential Signaling}
+Differential Signalling is a method of electrical communication using opposing electrical voltages on two wires. 
+This is advantageous in transmission of electrical signals in electrically noisy environments as no reference 
+point is used to infer information. If a reference point is used in an electrically noisy environment, the 
+noise can couple to the reference point, causing errors in the information transferred. Differential signalling 
+removes this dependency on a reference point by transferring information through the difference between the two 
+transmission lines. By twisting the transmission lines together, external electrical signals are coupled to both 
+lines, and do not affect the difference between the two lines. This way information is transferred over a large 
+distance reliably and at high speed. In Gigabit Ethernet, information is transferred through 4 pairs of twisted 
+differential paired cables.
+
+\subsection{Pulse Amplitude Modulation}
+Pulse Amplitude modulation is a form of modulating a signal with information encoded in discrete levels of pulses.
+Different versions of PAM have varying levels of discrete steps. In Gigabit Ethernet, PAM-5 is used with 5 
+different voltage levels each corresponding to different set of predefined binary codes interpreted by the 
+decoder.
+
+\subsection{IEEE 802.3ab}
+IEEE 802.3ab is the defining standard for gigabit ethernet communication across a copper link. 
+It defines the use of 4 pairs of copper and the maximum length (100 m) the protocol is designed for.
+Ethernet Physical Transceiver (Ethernet PHY)
+An Ethernet PHY is an electronic component used to convert signalling from a link layer device (Such as a MAC) 
+to the physical layer (differential signalling with PAM). Common interfaces to communicate from a MAC to a PHY 
+include GMII, RGMII, XGMII.
+
+\subsection{Gigabit Media Independent Interface (GMII)}
+GMII is a protocol used in this project to communicate between the Ethernet PHY and the MAC which is implemented 
+on the FPGA. The ethernet PHY decodes the data sent from the GMII interface, and produces the correct signalling 
+required for the receiving Etherenet PHY. The process of clocking out data requires 8 data line connections, 
+and a few extra lines for timing/scheduling.
+
+\subsection{RGMII}
+
+\subsection{Advanced Microcontroller Bus Architecture}
+
+\subsection{Advanced eXtensible Interface}
+
+\subsection{Serial Peripheral Interface}
