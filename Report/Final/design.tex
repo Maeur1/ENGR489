@@ -1,1 +1,48 @@
 \chapter{Design}\label{C:design}
+
+\section{Electronic Signalling}
+
+\par Latency at an electronic signal level is the accurate way of measuring the time cost to jump between nodes. 
+When electronic signals are received by a computer, there is a delay between the processing of the software 
+in the computer and the registering of the event in the CPU of the computer. This delay can vary based on load 
+on the computer, how the computer is operating and other external factors. To remove these factors, the decision 
+was made to measure latency of when the electronic signals leave the initial computer, and are detected at the 
+destination.
+
+\section{Ethernet}
+
+Ethernet was chosen as the platform to base the project around, as it is used widely across many network 
+infrastructures locally. The platform is very mature, as it has been used for many years, and a higher performance 
+version is used in data centres and core networking. This higher performance version is very similar to the Gigabit 
+version of Ethernet, but involves a higher frequency when clocking out data, but the signalling is very similar. 
+This means work done in this project can be used as a stepping stone to applying similar practices on higher 
+performance networking applications.
+
+\section{Discrete Logic}
+
+The clocking signals provided from Ethernet PHYs are electronic signals which combine logic operations to transmit 
+and receive data. This could be measured using discrete logic, as the means to interface with high speed busses 
+ranging in the MHz clocking region exists (Potato Semiconductors). The major issue is that measurement information 
+is needed to be provided in the digital workable form, for further processing.  This means producing a large binary 
+counter which can be accessed by a computer. Doing so would be very complex and a tedious task to design such a 
+large system, both physically and time wise.
+
+\section{Microcontroller}
+
+A process of measuring signals accurately, is to setup interrupts on a microcontroller, to precisely detect events 
+on a wire.  This involves halting the CPU to do an interrupt service routine, and do a set task (such as read a 
+timing register) and then continue with the original interrupted program. The time the CPU takes to register the 
+interrupt and save a timer value is limited to the maximum frequency that the CPU can run at. This has a maximum of 
+204 MHz, making the minimum time that can be measured greater than 4.9 ns. Interfacing with digital systems to 
+provide easily accessible measurements through SD cards, or other commonly used data transfer medium.
+
+\section{FPGA}
+
+A FPGA is suited to high speed, high performance tasks. It is a way to combine complex digital systems together in 
+a small physical footprint. As the FPGA uses logic elements to do all the signal processing, there is very little 
+latency introduced through components in the design. This latency reduction ensures that the measured timing is as 
+accurate as possible. The FPGA includes the flexibility to communicate and interact with complex digital protocols 
+while also able to perform time critical tasks. With this added flexibility comes compromise, where the programming 
+requires a proprietary procedure unique to each FPGA manufacturer, and limited capabilities with the resources 
+provided in each FPGA IC. This is combated with the use of a microprocessor interconnected to the FPGA, meaning the 
+complex workloads of simple digital tasks are offloaded to the microprocessor for post processing.
