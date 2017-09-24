@@ -1,11 +1,44 @@
 \chapter{Implementation}\label{C:impl}
 
 \section{Suitable Development FPGA Board}
+
+\par Selecting an FPGA requires the use of a development board. Although custom boards can be developed for a 
+specific purpose, a development board can have an assortment of peripherals and required components needed to 
+have a functioning device to program. 
+
 \subsection{Required Accompanying Hardware}
-\subsubsection{FLASH Memory}
+
+\par For the chosen FPGA family, the embedded processor requires some external components to function correctly.
+
+\subsubsection{Flash Memory}
+
+\par Flash memory is a solid state electronic memory storage medium. This is needed by the microprocessor in 
+the FPGA to configure the FPGA from a configuration file saved on the memory. This can also store an operating 
+system for the microprocessor to work with, or a boot program to execute when the board is powered up. A common 
+interface between the FPGA microprocessor and Flash memory is through QSPI, which is an implementation of SPI with 
+4 times the bandwidth through extra lanes provided. 
+
 \subsubsection{Random Access Memory (RAM)}
-\subsubsection{Universal Asynchronous Reciever/Transmitter (UART)}
-\subsubsection{Ethernet Physical Transceiever (Ethernet Phy)}
+
+\par The microprocessor built into the FPGA needs fast memory location to access large amounts of data. RAM is 
+connected to the FPGA to provide an ultra-fast (1.3 GHz) access to data, ensuring that the CPU is not held in an 
+idle state when processing data. This is a common design with modern day processors and computers.
+
+\subsubsection{Universal Asynchronous Receiver/Transmitter (UART)}
+
+\par Input and Output of the microprocessor is connected to two physical wires of the FPGA, which produce and 
+receive signals which conform to the UART standard. This allows for ASCII characters to the sent and received by 
+the processor. This is useful for debugging a program that is running on the processor, or giving a user some 
+feedback on what stage of the program has ran. This protocol is common in electronics, and it is common to obtain 
+UART to USB transceivers to be able to send and receive data to USB compatible computer.
+
+\subsubsection{Ethernet Physical Transceiver (Ethernet Phy)}
+
+\par A core function of the project is to be able to send and receive data on a ethernet based network. An Ethernet 
+Phy is an integrated circuit (IC) which receives data using a predefined electronic protocol interface and converts 
+the data into another protocol. This also works in the opposite direction, as the IC commonly comes in a transceiver 
+package. The one used in this project converts RGMII into the differential pair signal found in ethernet. 
+
 \section{PicoZed FPGA Development Board}
 \subsection{PicoZed System on a Module (SOM)}
 \subsection{PicoZed FMC Carrier V1}
