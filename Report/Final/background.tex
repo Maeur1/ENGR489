@@ -68,6 +68,9 @@ to flow from one port on the device to another.
 
 \section{Current Solutions}
 
+There are solutions present which can measure latency to a high degree (< 1 ms) but have some drawbacks in different areas.
+These can be split into two different catagories, hardware and software, referring to the process of which they measure latency.
+
 \subsection{Software}
 
 \subsubsection{Ping}
@@ -142,6 +145,11 @@ application for storing the timing information.
 \section{Related Work}
 
 \subsection{Moongen}
+
+MoonGen is a flexible high-speed network packet generator. The goal was to saturate 10 Gb Ethernet links using 
+a flexible hardware platform. A key issue defined in the paper was that Existing software solutions lack performance
+or flexibility when precision is desired. Existing hardware solutions are expensive with inflexible software accompanying
+the platform. A key takeaway is that the existing platforms are inflexible and lack precision.
 
 \subsection{Flexible High Performance Traffic Generation on Commodity Multi–Core Platforms}
 
