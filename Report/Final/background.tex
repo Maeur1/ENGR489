@@ -33,7 +33,8 @@ Layer 2 is responsible for transferring data between adjacent network devices \c
 information will be flowing to and from adjacent nodes, through a switch or router. To ensure that
 information flows through the switch or router, this layer must be taken into consideration to ensure
 successful transmission and reception of information.
-This layer is important to the project as the measuring device will be timing the latency between adjacent network devices and through network switches, both of which rely on Layer 2 information.
+This layer is important to the project as the measuring device will be timing the latency between adjacent 
+network devices and through network switches, both of which rely on Layer 2 information.
 
 \subsection{Layer 3}
 
@@ -77,9 +78,12 @@ These can be split into two different catagories, hardware and software, referri
 
 Ping is a Linux utility that can be used to estimate the latency to a given network server. 
 This is for large distance measurements, as the accuracy of this ranges from seconds to milliseconds. 
-It has also been tested that this utility is unreliable for performance extensive testing as momentary ‘glitches’ can appear in networks, causing random and unpredictable results \cite{pingisbad}.
-It is very useful at measuring very large latencies (>1 milliseconds) and displaying them in a concise format for analysis by the user. 
-This does not meet the need of having the ability to measure time in the nanosecond range, but a useful takeaway is to make sure that values are presented in an easy to analyse format (printing to screen, or to a file).
+It has also been tested that this utility is unreliable for performance extensive testing as momentary ‘glitches’ 
+can appear in networks, causing random and unpredictable results \cite{pingisbad}.
+It is very useful at measuring very large latencies (>1 milliseconds) and displaying them in a concise format 
+for analysis by the user. 
+This does not meet the need of having the ability to measure time in the nanosecond range, but a useful takeaway 
+is to make sure that values are presented in an easy to analyse format (printing to screen, or to a file).
 
 \subsubsection{Data plane Development Kit (DPDK)}
 
@@ -87,8 +91,10 @@ DPDK is a software implementation of rapid packet processing.
 This software utilises low level software drivers to interact directly with the hardware. 
 Doing so requires specific hardware on the computer which needs to be compatible with the software itself.
 Reducing the packet processing time reduces the time offset created by the CPU, but not fully removes it. 
-Examples in the source code have shown that the timing value is dependent on CPU frequencies \cite{dpdkcode} and Dynamic Frequency scaling \cite{turboboost} of modern CPUs can cause a change in this frequency at any time.
-An advantage of this solution is that it can produce a high-resolution time value (in the order of nanoseconds) and is easily accessible by a user in software for processing and analysing. 
+Examples in the source code have shown that the timing value is dependent on CPU frequencies \cite{dpdkcode} 
+and Dynamic Frequency scaling \cite{turboboost} of modern CPUs can cause a change in this frequency at any time.
+An advantage of this solution is that it can produce a high-resolution time value (in the order of nanoseconds) 
+and is easily accessible by a user in software for processing and analysing. 
 A lesson learnt from this approach is that a CPU based system for measuring high resolution timers will not be precise or accurate.
 
 \subsubsection{PF\textunderscore RING}
@@ -149,9 +155,15 @@ application for storing the timing information.
 MoonGen is a flexible high-speed network packet generator. The goal was to saturate 10 Gb Ethernet links using 
 a flexible hardware platform. A key issue defined in the paper was that Existing software solutions lack performance
 or flexibility when precision is desired. Existing hardware solutions are expensive with inflexible software accompanying
-the platform. A key takeaway is that the existing platforms are inflexible and lack precision.
+the platform. A key takeaway is that existing platforms are inflexible and lack precision.
 
 \subsection{Flexible High Performance Traffic Generation on Commodity Multi–Core Platforms}
+
+A similar problem is solved with this paper. The goal was to saturate a 10 Gb Ethernet link using software methods.
+Another mention of inflexible hardware solutions was present in this paper, alluding to the fact that existing
+solutions that are based on hardware are lacking in flexiblity. This may seem to say that a hardware based solution may
+not be the correct approach to measuring latency, but this shows the novelty in a solution that is flexible
+and hardware based.
 
 \subsection{A Distributed Instrument for Performance Analysis of Real-Time Ethernet Networks}
 
