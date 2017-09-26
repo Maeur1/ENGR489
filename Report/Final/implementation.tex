@@ -3,19 +3,19 @@
 \section{Suitable Development FPGA Board}
 
 \par Selecting an FPGA requires the use of a development board. Although custom boards can be developed for a 
-specific purpose, a development board can have an assortment of peripherals and required components needed to 
-have a functioning device to program. 
+specific purpose (REFERENCE), a development board can have an assortment of peripherals and required components needed to 
+have a functioning device to program (REFERENCE). 
 
 \subsection{Required Accompanying Hardware}
 
-\par For the chosen FPGA family, the embedded processor requires some external components to function correctly.
+\par For the chosen FPGA family, the embedded processor requires external components to function correctly.
 
 \subsubsection{Flash Memory}
 
 \par Flash memory is a solid state electronic memory storage medium. This is needed by the microprocessor in 
 the FPGA to configure the FPGA from a configuration file saved on the memory. This can also store an operating 
 system for the microprocessor to work with, or a boot program to execute when the board is powered up. A common 
-interface between the FPGA microprocessor and Flash memory is through QSPI, which is an implementation of SPI with 
+interface between the FPGA microprocessor and Flash memory is through QSPI(REFERNECE), which is an implementation of SPI with 
 4 times the bandwidth through extra lanes provided. 
 
 \subsubsection{Random Access Memory (RAM)}
@@ -26,7 +26,7 @@ idle state when processing data. This is a common design with modern day process
 
 \subsubsection{Universal Asynchronous Receiver/Transmitter (UART)}
 
-\par Input and Output of the microprocessor is connected to two physical wires of the FPGA, which produce and 
+\par Input and Output of the microprocessor is connected to two physical ports (REFERENCE) of the FPGA, which produce and 
 receive signals which conform to the UART standard. This allows for ASCII characters to the sent and received by 
 the processor. This is useful for debugging a program that is running on the processor, or giving a user some 
 feedback on what stage of the program has ran. This protocol is common in electronics, and it is common to obtain 
@@ -36,21 +36,10 @@ UART to USB transceivers to be able to send and receive data to USB compatible c
 
 \par A core function of the project is to be able to send and receive data on a ethernet based network. An Ethernet 
 Phy is an integrated circuit (IC) which receives data using a predefined electronic protocol interface and converts 
-the data into another protocol. This also works in the opposite direction, as the IC commonly comes in a transceiver 
-package. The one used in this project converts RGMII into the differential pair signal found in ethernet. 
+the data into another protocol (REFERENCE). This also works in the opposite direction, as the IC commonly comes in a transceiver 
+package. The one used in this project is the (EHTERHENT PHY HERE) which converts RGMII into the differential pair signal 
+found in ethernet. 
 
-\section{PicoZed FPGA Development Board}
-
-\par Avnet is a manufacturer of electronic compoenents and provides electronic design services. A main focus of the company
-is networking electronics. A product of Avnet is the family of PicoZed FPGA development kits.
-The development kit consists of a PicoZed System on a Module (SOM) and an appropriate breakout board.
-
-\subsection{PicoZed System on a Module (SOM)}
-
-\par The PicoZed SOM consists of a few peripherals connected to a Zynq-7000 FPGA. The SOM can come in a variety of 
-configurations, and in this project, a ZC7Z020 version was used.
-
-\subsection{PicoZed FMC Carrier V1}
 \section{Zedboard FPGA Development Board}
 \subsection{Ethernet FMC Card}
 \section{Xilinx Software Suite}
@@ -61,9 +50,9 @@ configurations, and in this project, a ZC7Z020 version was used.
 \subsection{Verilog}
 \section{Xilinx University Program (XUP)}
 
-\par XIlinx provides FPGA workflow tutorials which teach the process of constructing a basic FPGA design in the 
-Xilinx Vivado Software suite. The tutorials are targeted at development on a Zedboard FPGA development board, and were
-modified to work on the PicoZed FPGA development board.
+\par Xilinx University Program provides FPGA workflow tutorials which teach the process of constructing a basic FPGA 
+design in the Xilinx Vivado Software suite. The tutorials are targeted at development on a Zedboard FPGA development 
+board.
 
 \subsection{FPGA Design Flow}
 
@@ -91,6 +80,14 @@ image can be created to run the program on boot. This project has a Bare-Metal d
 with an Ethernet FMC card connected, measuring the latency found in a loopback test. 
 
 \section{Block Design}
+
+\par PUT IMAGE HERE
+
+\par To construct a easy to view representation of a large system design (IMAGE REFERENCE HERE), Vivado has a block level designer for
+FPGA designs called the IP Integrator. It shows interconnects between logical blocks of the design and allows for 
+configuration of blocks to fit specific purposes. The IP Integrator separates the Processing System (PS) and the 
+Programmable Logic (PL) of the FPGA. This is needed as the PS is represented as a reconfigurable block and cannot be redesigned, while
+the PL can only consist of FPGA specific blocks which can connect to the PS. 
 
 \subsection{Zynq Processing System (PS)}
 \subsection{Zynq Programmable Logic (PS)}
