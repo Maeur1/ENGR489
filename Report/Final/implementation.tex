@@ -43,8 +43,13 @@ package. The one used in this project converts RGMII into the differential pair 
 
 \par Avnet is a manufacturer of electronic compoenents and provides electronic design services. A main focus of the company
 is networking electronics. A product of Avnet is the family of PicoZed FPGA development kits.
+The development kit consists of a PicoZed System on a Module (SOM) and an appropriate breakout board.
 
 \subsection{PicoZed System on a Module (SOM)}
+
+\par The PicoZed SOM consists of a few peripherals connected to a Zynq-7000 FPGA. The SOM can come in a variety of 
+configurations, and in this project, a ZC7Z020 version was used.
+
 \subsection{PicoZed FMC Carrier V1}
 \section{Zedboard FPGA Development Board}
 \subsection{Ethernet FMC Card}
@@ -55,10 +60,36 @@ is networking electronics. A product of Avnet is the family of PicoZed FPGA deve
 \subsection{VHDL}
 \subsection{Verilog}
 \section{Xilinx University Program (XUP)}
+
+\par XIlinx provides FPGA workflow tutorials which teach the process of constructing a basic FPGA design in the 
+Xilinx Vivado Software suite. The tutorials are targeted at development on a Zedboard FPGA development board, and were
+modified to work on the PicoZed FPGA development board.
+
 \subsection{FPGA Design Flow}
+
+\par The FPGA design flow tutorials construct a basic understanding of the flow to run a design on a Zedboard. 
+This tutorial was to create a simple logic circuit to connect the on board switches to the on board LEDs. 
+The tutorial showed how the FPGA can be used to create logic circuits and how input and output is controlled.
+This is very different to commonly found microcontroller programming, as the FPGA is only a set of reconfigurable
+logic blocks, with no instructions to clock through.
+
 \subsection{Linux}
+
+\par A special feature of the Zynq-7000 Series FPGAs, is that there is a dual core ARM core embedded next to the FPGA.
+This dual core CPU can be used to run a full operating system on the development board. Part of the tutorials is 
+to create a Petalinux image to run on the development board. This is done through creating a custom linux kernel with
+the custom FPGA components added to be accessed from the linux operating system drivers. Example block designs
+for the Ethernet FMC card were intergrated with a custom linux image to test the ethernet capabilities of the FMC 
+card.
+
 \subsection{Embedded}
-\subsection{Advanced Embedded}
+
+\par Connecting custom kernels for peripherals made in the FPGA takes a long amount of time to compile and test. 
+Another process of testing kernel FPGA extensions was to write Bare-Metal applications. These are C code programs 
+compiled to run when the FPGA programmed over the JTAG header, or an image can be created to run the program on boot.
+This project has a Bare-Metal demo which runs on the Zedboard with an Ethernet FMC card connected, measuring the 
+latency found in a loopback test. 
+
 \section{Block Design}
 \subsection{Zynq Processing System (PS)}
 \subsection{Zynq Programmable Logic (PS)}
