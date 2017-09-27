@@ -90,7 +90,21 @@ Programmable Logic (PL) of the FPGA. This is needed as the PS is represented as 
 the PL can only consist of FPGA specific blocks which can connect to the PS. 
 
 \subsection{Zynq Processing System (PS)}
-\subsection{Zynq Programmable Logic (PS)}
+
+PUT IMAGE HERE
+
+\par A section of the XC7Z020 is a Dual Core ARM CPU for running embedded level software. This part of the FPGA is also 
+responsible for producing the clock signals used in the Programmable Logic (PL). There are 4 different configurable clocks
+available to the PL. In this project, one is producing a 100 MHz signal, which is used for clocking the AXI signals, and another
+is used to create a 250 MHz signal to clock the counter which measures the time. 
+
+\subsection{Zynq Programmable Logic (PL)}
+
+\par In the Zynq-7000 FPGAs, there are (NUMBER) of slices, which correspond to how many reconfigurable macro cells there are. These can 
+be configured to be logical structures which can perform digital logic operations on voltage signals provided to the FPGA. The PL is 
+the part of the Zynq-7000 series of FPGAs which consist of only macro cells, but with the added ability to interface directly to the 
+PS. Transactions between the PS and PL are performed through an interface called AXI, using an architecture standard called AMBA.
+
 \subsection{Advanced Microcontroller Bus Architecture (AMBA)}
 \subsection{Advanced eXtensible Interface (AXI)}
 \subsection{Clock Generation}
