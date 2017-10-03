@@ -40,6 +40,20 @@ length of the cable. The gradient difference of the theoretical line can be attr
 velocity factor through the different cables.
 
 \par The difference between the theoretical and measured value of the 25 m cable was 14 ns. This is not within the 
-accuracy margin which was required, hence 2 m and 3 m cables are used for the reliablity tests.
+accuracy margin which was required, hence 2 m and 3 m cables are used for the reliablity tests as the difference was below 2 ns.
 
 \section{Reliability Testing}
+
+\par To test reliability of the device, repeated tests were performed to show that results would stay consistent
+from test to test. As the goal of the project was to measure the latency in network swtiches, these tests were to 
+measure the latency through a network switch and provide repeatable results. These results did not neccessarily have
+to be accurate, as the accuracy was determined in the test in accuracy testing, hence these results are only to 
+measure the reliability.
+
+\par Results from the tests were compared to an existing DPDK software based latency measurement method. This was 
+run on two separate machines which had clocks synchronoised using PTP protocol and as a result, the timings varied 
+significantly. This comparision was to show that the software based methods have flexibility that hardware methods
+are missing while also performing unreliably. The DPDK based system was compared to the FPGA based device by producing
+a packet on one machine, then sending the packet through the network switch to arrive at the other machine, and the
+time delta is returned from both machines. The FPGA device also performed the same task with the same cables, but 
+the two connections arrived at the same machine.
