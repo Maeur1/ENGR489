@@ -57,3 +57,25 @@ are missing while also performing unreliably. The DPDK based system was compared
 a packet on one machine, then sending the packet through the network switch to arrive at the other machine, and the
 time delta is returned from both machines. The FPGA device also performed the same task with the same cables, but 
 the two connections arrived at the same machine.
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,height=7.5cm]{Images/DPDK}
+        \caption{Results from DPDK Reliability Measurements}
+        \label{fig:DPDKReliability}
+    \end{center}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,height=7.5cm]{Images/Test1Plot}
+        \caption{Results from FPGA device Reliability Measurements}
+        \label{fig:Test2Plot}
+    \end{center}
+\end{figure}
+
+\par As seen in the results, the FPGA device produced a value lower than the mean value. This is very interesting, as
+it is an unexpected result. Lower values produced by the device could be attributed to the device misinterpreting 
+the reception of a previous test as the end of the current test. Regardless of this result, the device produced over 
+10 times lower standard deviation compared with the results from the DPDK test setup. This can be concluded as a 
+successful test.
