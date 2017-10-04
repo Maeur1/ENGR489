@@ -1,118 +1,88 @@
 \chapter{Implementation}\label{C:impl}
 
-\section{Suitable Development FPGA Board}
+\par Initially a system block must generate a network packet that can be used to measure the latency. On a x86 based 
+computer, this is done through the CPU, and an element called a MAC. The MAC is used to convert logic link control 
+signals into physical hardware signals for the Ethernet Phy to interpret. An Ethernet Phy is required as the 802.3ab 
+standard defines the electrical connection from one node to another to consist of 4 twisted pairs and the 
+differential electrical signals required for this cable is not possible in a FPGA, or in a CPU, hence this is 
+offloaded to an external IC. Connections consist of commonly found Category 5e and 6 cabling, which adheres to the 
+tolerance for how many twists are performed per meter cable (Important for signal integrity). The connection between 
+the MAC and the Ethernet PHY is performed through a hardware protocol standard called Media Independent Interface 
+(MII) and then converted to the differential signals across the Category 5e/6 cable. The gigabit version of ethernet 
+uses an extended version of MII called Reduced Gigabit Media Independent Interface (RGMII).
 
-\par Selecting an FPGA requires the use of a development board. Although custom boards can be developed for a 
-specific purpose (REFERENCE), a development board can have an assortment of peripherals and required components needed to 
-have a functioning device to program (REFERENCE). 
+\section{Block Design (Concept)}
 
-\subsection{Required Accompanying Hardware}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,width=15cm]{Images/BlockDesignConcept}
+        \caption{Generic Block Design Concept}
+        \label{fig:blockdesignconcept}
+    \end{center}
+\end{figure}
 
-\par For the chosen FPGA family, the embedded processor requires external components to function correctly.
+\par Figure above shows the conceptual structure of the design. Blue represent FPGA logic blocks, Red represents 
+Bare-Metal programs run on the ARM Processor, Green represents external ICs and Yellow represent other hardware 
+external to the FPGA development board.
 
-\subsubsection{Flash Memory}
+\par The Sender MAC, the FPGA produces a repeated signal of a network packets and an interrupt to a timing module to 
+begin counting. The number of packets per second (PPS) is controlled by hardware switches found on the development 
+board itself. The Ethernet Phy converts these RGMII signals into differential signals what are used in communicating 
+over CAT 5e/6 cable. This is then switched to the other Ethernet Phy, and the receiving end detects the incoming 
+packet. The Receiver MAC detects the network packet, and produces an interrupt for the timing module to stop counting.
 
-\par Flash memory is a solid state electronic memory storage medium. This is needed by the microprocessor in 
-the FPGA to configure the FPGA from a configuration file saved on the memory. This can also store an operating 
-system for the microprocessor to work with, or a boot program to execute when the board is powered up. A common 
-interface between the FPGA microprocessor and Flash memory is through QSPI(REFERNECE), which is an implementation of SPI with 
-4 times the bandwidth through extra lanes provided. 
+\par The Timing Module captures the events produced by the MACs and once a value is stored in the register, it 
+produces an interrupt for the ARM Processor to begin reading the register. 
 
-\subsubsection{Random Access Memory (RAM)}
+\par A program running on the ARM Processor intercepts the interrupt, and an interrupt service routine begins. This 
+retrieves the value in the register and saves it to the SD card. Every time the interrupt is triggered, the value is 
+appended to the end of a file stored on the SD Card. 
 
-\par The microprocessor built into the FPGA needs fast memory location to access large amounts of data. RAM is 
-connected to the FPGA to provide an ultra-fast (1.3 GHz) access to data, ensuring that the CPU is not held in an 
-idle state when processing data. This is a common design with modern day processors and computers.
+\section{Block Design (Implementation)}
 
-\subsubsection{Universal Asynchronous Receiver/Transmitter (UART)}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,width=15cm]{Images/BlockDesignImpl}
+        \caption{FPGA Block Design Implementation}
+        \label{fig:blockdesignimpl}
+    \end{center}
+\end{figure}
 
-\par Input and Output of the microprocessor is connected to two physical ports (REFERENCE) of the FPGA, which produce and 
-receive signals which conform to the UART standard. This allows for ASCII characters to the sent and received by 
-the processor. This is useful for debugging a program that is running on the processor, or giving a user some 
-feedback on what stage of the program has ran. This protocol is common in electronics, and it is common to obtain 
-UART to USB transceivers to be able to send and receive data to USB compatible computer.
+\par Figure \ref{fig:blockdesignimpl} above shows the overall diagram of the FPGA logic blocks. This is the view 
+through the IP integrator in Vivado 2017.2. Thicker lines in the diagram represent busses, while the thinner black 
+lines represent single wires.  Connections on the left and right of the diagram represent Inputs and Outputs to the 
+FPGA respectively. 
 
-\subsubsection{Ethernet Physical Transceiver (Ethernet Phy)}
+\par The extra blocks in the upper area of the diagram represent constructs needed for AXI peripherals. This allows 
+the PS to interact and access registers found in the PL of the FPGA. AXI manages the control signalling for buffering 
+and clocking data in and out of the PS.
 
-\par A core function of the project is to be able to send and receive data on a ethernet based network. An Ethernet 
-Phy is an integrated circuit (IC) which receives data using a predefined electronic protocol interface and converts 
-the data into another protocol (REFERENCE). This also works in the opposite direction, as the IC commonly comes in a transceiver 
-package. The one used in this project is the (EHTERHENT PHY HERE) which converts RGMII into the differential pair signal 
-found in ethernet. 
+\section{Reduced Gigabit Media Independent Interface (RGMII)}
 
-\section{Zedboard FPGA Development Board}
-\subsection{Ethernet FMC Card}
-\section{Xilinx Software Suite}
-\subsection{Vivado 2017.2}
-\subsection{Xilinx Software Development Kit}
-\section{Hardware Descriptor Language (HDL)}
-\subsection{VHDL}
-\subsection{Verilog}
-\section{Xilinx University Program (XUP)}
+\par To provide a better understanding of RGMII, Gigabit Media Independent Interface (GMII) must be understood. 
 
-\par Xilinx University Program provides FPGA workflow tutorials which teach the process of constructing a basic FPGA 
-design in the Xilinx Vivado Software suite. The tutorials are targeted at development on a Zedboard FPGA development 
-board.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,width=8cm]{Images/GMIIWiring}
+        \caption{GMII Physical Wiring}
+        \label{fig:gmiiwiring}
+    \end{center}
+\end{figure}
 
-\subsection{FPGA Design Flow}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,width=15cm]{Images/GMIISignaling}
+        \caption{GMII Signal Timings}
+        \label{fig:gmiisignals}
+    \end{center}
+\end{figure}
 
-\par The FPGA design flow tutorials construct a basic understanding of the flow to run a design on a Zedboard. 
-This tutorial was to create a simple logic circuit to connect the on board switches to the on board LEDs. 
-The tutorial showed how the FPGA can be used to create logic circuits and how input and output is controlled.
-This is very different to commonly found microcontroller programming, as the FPGA is only a set of reconfigurable
-logic blocks, with no instructions to clock through.
+\par GMII is a full duplex interface between the MAC and an Ethernet Phy. As shown in Figure 2, the physical wiring 
+consists of 22 wires between the two devices. The signalling shown in Figure 3 gives an example of how data is 
+transferred to and from the Phy. Bytes transmitted to the Ethernet Phy are then converted and sent across the 
+Cat5e/6 cable. RGMII is a Dual Data Rate Extension to GMII, by which the data is clocked on both the rising and 
+falling edge of the clock. This means that one byte can be transmitted over four wires instead of 8, while keeping 
+the same clock frequency. This is advantageous as there is commonly limited space on a PCB for wiring interconnects 
+together, especially when there are more than 400 pins on a device (The XC7Z020-CLG484 found on the Zedboard, has 
+484 package pins). 
 
-\subsection{Linux}
-
-\par A special feature of the Zynq-7000 Series FPGAs, is that there is a dual core ARM core embedded next to the FPGA.
-This dual core CPU can be used to run a full operating system on the development board. Part of the tutorials is 
-to create a Petalinux image to run on the development board. This is done through creating a custom linux kernel with
-the custom FPGA components added to be accessed from the linux operating system drivers. Example block designs
-for the Ethernet FMC card were intergrated with a custom linux image to test the ethernet capabilities of the FMC 
-card.
-
-\subsection{Embedded}
-
-\par Connecting custom kernels for peripherals made in the FPGA takes a long amount of time to compile and test. 
-Another process of testing kernel FPGA extensions was to write Bare-Metal applications using the Software 
-Development Kit. These are C code programs compiled to run when the FPGA programmed over the JTAG header, or an 
-image can be created to run the program on boot. This project has a Bare-Metal demo which runs on the Zedboard 
-with an Ethernet FMC card connected, measuring the latency found in a loopback test. 
-
-\section{Block Design}
-
-\par PUT IMAGE HERE
-
-\par To construct a easy to view representation of a large system design (IMAGE REFERENCE HERE), Vivado has a block level designer for
-FPGA designs called the IP Integrator. It shows interconnects between logical blocks of the design and allows for 
-configuration of blocks to fit specific purposes. The IP Integrator separates the Processing System (PS) and the 
-Programmable Logic (PL) of the FPGA. This is needed as the PS is represented as a reconfigurable block and cannot be redesigned, while
-the PL can only consist of FPGA specific blocks which can connect to the PS. 
-
-\subsection{Zynq Processing System (PS)}
-
-PUT IMAGE HERE
-
-\par A section of the XC7Z020 is a Dual Core ARM CPU for running embedded level software. This part of the FPGA is also 
-responsible for producing the clock signals used in the Programmable Logic (PL). There are 4 different configurable clocks
-available to the PL. In this project, one is producing a 100 MHz signal, which is used for clocking the AXI signals, and another
-is used to create a 250 MHz signal to clock the counter which measures the time. 
-
-\subsection{Zynq Programmable Logic (PL)}
-
-\par In the Zynq-7000 FPGAs, there are (NUMBER) of slices, which correspond to how many reconfigurable macro cells there are. These can 
-be configured to be logical structures which can perform digital logic operations on voltage signals provided to the FPGA. The PL is 
-the part of the Zynq-7000 series of FPGAs which consist of only macro cells, but with the added ability to interface directly to the 
-PS. Transactions between the PS and PL are performed through an interface called AXI, using an architecture standard called AMBA.
-
-\subsection{Advanced Microcontroller Bus Architecture (AMBA)}
-\subsection{Advanced eXtensible Interface (AXI)}
-\subsection{Clock Generation}
-\subsubsection{Phased Locked Loop}
-\subsection{Packet Generator}
-\subsubsection{RGMII Signal Processing}
-\subsection{Packet Detector}
-\section{Software Development Kit}
-\subsection{Reading AXI Registers}
-\subsection{SD Card}
-\subsection{Retrieving Test Results}
