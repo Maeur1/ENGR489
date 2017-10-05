@@ -19,7 +19,7 @@ defines these different layers of extra information and their purpose.
 Network switches and network routers interpret the destination based off information found in
 Layer 2 or Layer 3 from the OSI model, hence I must adhere to the protocol standards found at these
 layers. Layers 4 and above provide other benefits to the payload such as reliability and is not a
-concern for this project.
+concern for this project as it does not effect the latency of the lower layers.
 
 \subsection{Layer 1}
 
@@ -29,12 +29,13 @@ representing the information. For this project, the latency is measured at this 
 
 \subsection{Layer 2}
 
-Layer 2 is responsible for transferring data between adjacent network devices \cite{IEEE802}. This is important as
-information will be flowing to and from adjacent nodes, through a switch or router. To ensure that
-information flows through the switch or router, this layer must be taken into consideration to ensure
-successful transmission and reception of information.
-This layer is important to the project as the measuring device will be timing the latency between adjacent 
-network devices and through network switches, both of which rely on Layer 2 information.
+Layer 2 is responsible for transferring data between adjacent network devices \cite{IEEE802}. This is important as 
+information will be flowing to and from adjacent nodes, through a switch or router. To ensure that information flows 
+through the switch or router, this layer must be taken into consideration to ensure successful transmission and 
+reception of information. This layer is important to the project as the measuring device will be timing the latency 
+between adjacent network devices and through network switches, both of which rely on Layer 2 information to determine 
+the recipient and sender of network packets. The process of choosing which port to send out a network packet based off
+Layer 2 information causes delays through these devices.
 
 \subsection{Layer 3}
 
@@ -52,25 +53,26 @@ This project will be focusing on One Way Trip time, because it is a subset of th
 
 Connection time describes the time that two devices take to enable information flow between them. In
 some cases, there are many synchronisation and authentication steps that need to take place before
-any information can flow. This latency is defined as the initialization of the first command, to the
-processing of the final command.
+any information can flow. This latency is defined as the length of a transmission session from initalization to 
+completion.
 
-\subsection{Return Trip Time}
+\subsection{Round-Trip Time (RTT)}
 
-In some cases, the return trip time can be used to measure the one-way latency of two devices. One
+In some cases, the RTT can be used to measure the average one-way latency of two devices. One
 device sends a request for an echo and when the echo is recieved, the time taken from transmition to reception is
 twice the latency between devices.
 
-\subsection{One way Trip Time}
+\subsection{One way Trip Time (OTT)}
 
-This is similar to Return Trip Time but instead of requiring an echo back to the sender, the receiver is on the
-same device. Hence the latency of the connection is measured as the time taken for the information
-to flow from one port on the device to another.
+The definition of one way trip time is only for the use of this report. This is similar to Return Trip Time but 
+instead of requiring an echo back to the sender, the receiver is on the same device. Hence the latency of the 
+connection is measured as the time taken for the information to flow from one interface port on the device to another.
 
 \section{Current Solutions}
 
-There are solutions present which can measure latency to a high degree (< 1 ms) but have some drawbacks in different areas.
-These can be split into two different catagories, hardware and software, referring to the process of which they measure latency.
+There are solutions present which can measure latency to a high degree (< 1 ms) but have some drawbacks in different 
+areas. These can be split into two different catagories, hardware and software, referring to the process by which 
+they measure latency.
 
 \subsection{Software}
 
