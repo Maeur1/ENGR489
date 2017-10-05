@@ -1,13 +1,15 @@
 \chapter{Introduction}\label{C:intro}
 
-\par Fast internet connections are becoming more and more desired as high bandwidth media consumption and internet based services grow in popularity. 
-Speed of an internet connection can be separated into two distinct metrics, latency and bandwidth. 
-Latency is the time taken for information to travel from one place to another and the delay introduced by the device itself, while bandwidth is the amount of information that can flow reliably from end to end.
-When a user is accessing a website, such as Facebook, their requests traverse multiple network devices
-(physical hardware) to reach that websites’ servers. Throughout this travel, each network device
-introduces some latency, as there is processing time required to send information to the right
-destination. Although this delay is very small, over the course of multiple hops it can become
-significant.
+\par Fast internet connections are becoming more and more desired as high bandwidth media consumption and internet 
+based services grow in popularity. Speed of an internet connection can be separated into two distinct metrics, 
+latency and bandwidth. Latency is the time taken for information to travel from one place to another and the delay 
+introduced by the device itself, while bandwidth is the amount of information that can flow reliably from end to end.
+When a user is accessing a website, such as Facebook, their requests traverse multiple network devices (physical 
+hardware) to reach that website's servers. Throughout this travel, each network device introduces some latency, as 
+there is processing time required to send information to the right destination. Although this delay is very small, 
+over the course of multiple hops it can become significant. Measuring this small latency with current solutions is
+convoluted and without the right systems, can be unreliable. By measuring this latency, we can enable research to
+reduce latency to create a faster internet.
 
 \section{Problem}
 
@@ -15,9 +17,12 @@ significant.
 This research is reaching the point where network traffic can have latency as little as 1ms \cite{lessthan1ms} or below.
 To advance further, new tools need to have the capability of measuring this latency.
 
-\par Existing hardware solutions to measuring latency are capable of measuring less than 1 ms.
-These require some additional training in the software suite provided with the hardware \cite{dagfeatures}, or existing systems to extend capabilites to.
-This drives the cost of using the device up, in terms of both time and money as learning the software suite takes time too.
+\par Existing hardware solutions to measuring latency are capable of measuring less than 1 ms but require some 
+additional training in the software suite provided with the hardware \cite{dagfeatures}. Additional processes attached
+to hardware based methods can require dedicated computers for the measurement and analysis of networks. This means 
+that each researcher would require an understanding of the software suite accompanied with a dedicated computer 
+all setup for specific tests to be run. Each different test would require reconfiguring of both hardware and software.
+This drives the cost of using the device up, in terms of both time and money.
 
 \par Current software solutions can measure latency in ethernet network traffic down to a resolution of
 milliseconds and sometimes microseconds \cite{pingisbad}. There are no software solutions that can measure
