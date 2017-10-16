@@ -1,2 +1,42 @@
-\chapter{Conclusion}\label{C:conc}
+\chapter{Future Work and Conclusion}\label{C:conc}
 
+As the device is a minimum viable product, there are many improvements that can be made to make the device more 
+reliable and flexible. 
+
+\section{ID Packets}
+
+Currently the device has a standard packet format which is hard coded into the FPGA fabric, to produce network 
+packets. The idea of producing packets with increasing IDs can ensure that tests can be run in parallel and would 
+not interfere with each other. This is the hypothesized reason for the short latencies produced during testing. This 
+would help ensure that each test is independent and could also remove the problem of very short outliers in the 
+results.
+
+\section{Connect to the Internet for added Flexibility}
+
+The device made has a spare ethernet port to connect to an internet connected network. This would allow the device 
+results to be published to cloud based information aggregators such as AWS Kinesis.
+
+\section{Remote Connectivity}
+
+Connecting the device to a network, would allow an operator to connect to the device remotely and run tests without 
+being physically present with the device. This would be advantageous in a datacentre setting, as locations of 
+servers are commonly a harsh environment for humans to be in. To allow the remote connection to the device, a Linux 
+image would need to be created with a Linux program to run the tests. 
+
+\section{Custom Hardware}
+
+The Zedboard and Ethernet FMC card both contain extra hardware which is not utilized in this project. A custom PCB 
+with the FPGA would be able to significantly reduce the cost of entry to this platform by mass manufacturing a PCB 
+with only the required components on board.
+
+\section{Conclusion}
+
+The device is currently a minimum viable product. The device can provide high resolution and reliable timings in a 
+flexible format.  This is useful for new research being done with high speed communications as the need for faster 
+data transfer grows and the measurement of smaller and smaller latencies is becoming more of an issue. This is 
+currently solved by using one of the many hardware device platforms that are available, but these do not offer 
+flexible way of obtaining results and require training in using the device.  Software platforms provide the 
+flexibility that hardware systems do not provide, but produce inconsistent and unreliable results.
+
+As shown by this device, hardware platforms can be both flexible and provide reliable testing results. This device 
+fills a gap in the market where no proprietary software is needed to accompany the device for network packet analysis. 
