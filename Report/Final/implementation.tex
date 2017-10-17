@@ -1,5 +1,21 @@
 \chapter{Implementation}\label{C:impl}
 
+Begin with generating a packet, and how it generates the RGMII signals
+
+Then Flow into how the MAC addresses are set in the data section of the packet
+
+Then talk about generating an interrupt when sent
+
+Then talk about how to detect an incoming packet on the other port and generating an interrup from that
+
+Then talk about Measuring the time between the two interrupts. 
+
+Then talk about how to get the value from the register which stores the interrupt timer.
+
+Then talk about the math to convert to ns.
+
+Then talk about how to write it to the SD card. bring in some SDK screen shots of how to setup xilffs
+
 \lstinputlisting[language=VHDL, firstline=36, lastline=37, basicstyle=\small]{Code/byte\string_data.vhd}
 
 \lstinputlisting[language=VHDL, firstline=46, lastline=52, basicstyle=\small]{Code/edge\string_detector.vhd}
@@ -7,3 +23,5 @@
 \lstinputlisting[language=VHDL, firstline=57, lastline=70, basicstyle=\small]{Code/InterruptTimer.vhd}
 
 \lstinputlisting[language=VHDL, firstline=86, lastline=92, basicstyle=\small]{Code/packet\string_timer.c}
+
+\lstinputlisting[language=VHDL, firstline=311, lastline=343, basicstyle=\small]{Code/gigabit\string_test.vhd}
