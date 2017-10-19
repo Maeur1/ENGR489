@@ -1,5 +1,7 @@
 \chapter{Implementation}\label{C:impl}
 
+\section{Hardware Setup}
+
 \section{VHDL Implementation}
 
 The design of the packet generator was a modified example of a RGMII packet sender was used, which was created by an 
@@ -54,6 +56,8 @@ in nanoseconds.
 Utilizing software running on the PS, the constant processing time is removed and the xilffs library to communicate 
 to the SD card. Using the xilffs library functions, the data is written to the SD card in a simple CSV format, for 
 post processing.
+
+\section{Running a test}
 
 %\lstinputlisting[language=VHDL, firstline=57, lastline=70, basicstyle=\small]{Code/InterruptTimer.vhd}
 
