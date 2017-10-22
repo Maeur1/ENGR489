@@ -3,14 +3,37 @@
 \begin{figure}[H]
     \begin{center}
         \includegraphics[keepaspectratio,width=8cm]{Images/MeasurementSequence}
-        \caption{Design of Measurement Sequence}
+        \caption{High level flow chart of Measurement Sequence}
         \label{fig:measurementsequence}
     \end{center}
 \end{figure}
 
-\par Initially a system block must generate a network packet that can be used to measure the latency. On a x86 based 
-computer, this is done through the CPU, and an element called a MAC. The MAC is used to convert logic link control 
-signals into physical hardware signals for the Ethernet Phy to interpret. An Ethernet Phy is required as the 802.3ab 
+The goal of this project is to create a device which can measure latency between two connections with high precision
+and accuracy. \ref{fig:measurementsequency} shows the high level overview of what the device needs to be able to do.
+The following is the design decisions made to achieve the goal.
+
+\section{Hardware Design}
+
+For a platform to be flexible, it must be able to interact with any type of software and analysis tools. This is 
+easily done by storing the data in an easy to use format (such as CSV) and providing it on a medium which is 
+easily accessible and compatible with existing computers, which are typically x86 based PCs. Therefore, the choice 
+was made to write the data to an SD card, which can be removed and inserted into a computer for post processing, 
+allowing the platform to be flexible. 
+
+At the same time as being a flexible platform, the device needs to be able to measure low level electrical signals 
+with high reliability, while performing complex high-level instructions such as measuring the time between two 
+signals. The best way to perform high precision actions with complex digital logic is a FPGA. The high-speed clocks 
+involved with very precise timing instruments are too fast for a typical microcontroller or processor. 
+
+A platform that combines both flexibility and ability to measure low level electrical signals is the Zynq line of 
+FPGAs by Xilinx. These combine both a FPGA with an ARM processor, to allow for a full operating system to be run in 
+tandem with operations on the FPGA.  The ARM processor can allow for future extensions onto the device to allow for 
+interconnectivity with different kinds of storage mediums, and even connect to the internet too, making it a highly 
+flexible platform. 
+
+A FPGA System block must generate a network packet that can be used to measure the latency. On a x86 based computer, 
+this is done through the CPU, and an element called a MAC. The MAC is used to convert logic link control signals 
+into physical hardware signals for the Ethernet Phy to interpret. An Ethernet Phy is required as the 802.3ab 
 standard defines the electrical connection from one node to another to consist of 4 twisted pairs and the 
 differential electrical signals required for this cable is not possible in a FPGA, or in a CPU, hence this is 
 offloaded to an external IC. Connections consist of commonly found Category 5e and 6 cabling, which adheres to the 
@@ -71,7 +94,7 @@ and clocking data in and out of the PS.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[keepaspectratio,width=8cm]{Images/GMIIWiring}
+        \includegraphics[keepaspectratio,height=5cm]{Images/GMIIWiring}
         \caption{GMII Physical Wiring}
         \label{fig:gmiiwiring}
     \end{center}

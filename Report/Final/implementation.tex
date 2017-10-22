@@ -1,6 +1,22 @@
 \chapter{Implementation}\label{C:impl}
 
-\section{Hardware Setup}
+\section{Vivado Setup}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[height=8cm,keepaspectratio]{Images/Vivado.png}
+        \caption{Screenshot of Vivado Design Suite 2017.2 User Interface}
+        \label{fig:vivado}
+    \end{center}
+\end{figure}
+
+As the device is using a Xilinx platform, the Xilinx suite of software must be used to create and implement a FPGA 
+design for the Zynq FPGA. Vivado Design Suite is the software made by Xilinx which allows for the design and 
+evaluation of FPGA designs. To design this project, the Zedboard by AvNET featuring the XC7Z020-CLG484 FPGA was 
+chosen as the platform to use as the university had readily available access to resources and help required to 
+develop for the board. The WebPACK edition of Vivado allows for the whole software suite to be used, but limited to 
+a few devices, under which the XC7Z020-CLG484 is included. Vivado 2017.2 was used for the designing and implementing 
+the FPGA design.
 
 \section{VHDL Implementation}
 
@@ -57,7 +73,24 @@ Utilizing software running on the PS, the constant processing time is removed an
 to the SD card. Using the xilffs library functions, the data is written to the SD card in a simple CSV format, for 
 post processing.
 
-\section{Running a test}
+\section{Xilinx SDK}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[height=8cm,keepaspectratio]{Images/SDK.png}
+        \caption{Screenshot of Xilinx SDK user interface}
+        \label{fig:SDK}
+    \end{center}
+\end{figure}
+
+To run software on the PS of the FPGA, C code is written in the Xilinx SDK and the standard input and output is 
+piped through the UART on the FPGA. This C code is also able to interact with PS specific GPIO and peripherals, such 
+as the SD card and USB port.  Applications made in the Xilinx SDK are called “Bare Metal” applications, as they 
+require no operating system to run on the PS.
+
+To perform a test with the device, a C program has been created which when run, the device produces packets on PORT0 
+on the Ethernet FMC and detects the packets on PORT1. The time difference between these is then recorded and 
+processed before being written to a CSV file on the SD card. 
 
 %\lstinputlisting[language=VHDL, firstline=57, lastline=70, basicstyle=\small]{Code/InterruptTimer.vhd}
 

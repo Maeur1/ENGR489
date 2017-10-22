@@ -20,6 +20,8 @@
 
 \usepackage{listings}
 
+\usepackage{tocloft}
+
 \let\OldTexttrademark\texttrademark
 \renewcommand{\texttrademark}{\OldTexttrademark\xspace}%
 \setlength{\parskip}{1em}
@@ -88,6 +90,8 @@
 
 %\include{acknowledge}
 
+\setlength{\cftbeforechapskip}{.1ex}
+\setlength{\cftbeforesecskip}{0.1ex}
 \tableofcontents
 
 % we want a list of the figures we defined
