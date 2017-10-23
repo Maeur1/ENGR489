@@ -32,7 +32,7 @@ using the following formula:
 \[ Latency = \frac{L}{cV_f} \] 
 
 Where L is the length of the cable, c is the speed of light (299,792,458 m/s) and V\textsubscript{f} is velocity 
-factor of ethernet cables (0.65 (REFERENCE HERE)).
+factor of ethernet cables \cite{VelFactor}.
 
 A very short cable (4 cm) was used to measure the processing time, a constant added to every measurement. This 
 processing time is the result of both Ethernet Phys converting between the two protocols (Differential Pairs and 
@@ -60,7 +60,7 @@ packet latency measurements for that cable were then plotted versus the length o
 \end{figure}
 
 As shown in Figure \ref{fig:cableTesting}, the results from the device show a linear trend in latency due to length 
-of the cable. The velocity factor was obtained from (CITE HERE) and a change in velocity factor could be a factor 
+of the cable. The velocity factor was obtained from \cite{VelFactor} and a change in velocity factor could be a factor 
 for the discrepancies found in the gradients. The values have an error of ±4 ns as the points fluctuated above and 
 below a certain value and the average was plotted. There were no outliers during testing, showing how the device is 
 not prone to producing wildly different results.
@@ -76,7 +76,7 @@ not prone to producing wildly different results.
 An interesting point in Figure \ref{fig:cableTesting} is that the 25 m measurement was less than the theoretical 
 value. The velocity factor appears to be the main cause of this difference, as the speed of light cannot change and 
 different cables tend to have different velocity factors and this is shown in Figure \ref{fig:cableTesting075}. With 
-the velocity factor altered to 0.75, this makes device appear more accurate. The standard deviation of the 25 m test 
+the velocity factor altered to 0.75 (another possible value found \cite{VelFactor075}), this makes device appear more accurate. The standard deviation of the 25 m test 
 is 2.4 ns, with a range of 8 ns.
 
 From the results given, it is accurate to within 4 ns when measuring short ranged cables of 2-3 m and the longer the 

@@ -201,7 +201,21 @@ include GMII, RGMII, XGMII.
 
 \subsection{Gigabit Media Independent Interface (GMII)}
 
-(GMII IMAGE HERE)
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,height=4cm]{Images/GMIIWiring}
+        \caption{GMII Physical Wiring}
+        \label{fig:gmiiwiring}
+    \end{center}
+\end{figure}
+
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[keepaspectratio,width=15cm]{Images/GMIISignaling}
+        \caption{GMII Signal Timings}
+        \label{fig:gmiisignals}
+    \end{center}
+\end{figure}
 
 \par GMII is a protocol used in this project to communicate between the Ethernet PHY and the MAC which is implemented 
 on the FPGA. The ethernet PHY decodes the data sent from the GMII interface, and produces the correct signalling 
@@ -210,13 +224,11 @@ and a few extra lines for timing/scheduling.
 
 \subsection{Reduced GMII (RGMII)}
 
-(RGMII Signals HERE)
-
-\par RGMII is an implemenetation of GMII, but a key difference is a reduction in the number of transmit lines. This is
-possible through the use of clocking all signals on a bus consisting of Dual-Data-Rate (DDR) lines. This is done through 
-clocking the data in and out on both the rsising edge and the falling edge of the clock. This helps reduce the number
-of physical wires used to interconnect components on the PCB, making more space for routing other complex busses (Such as
-DDR3 for the RAM).
+\par RGMII is an implemenetation of GMII, but the key difference is half the number of data transmit lines. This is
+possible through the use of clocking all signals on a bus consisting of Dual-Data-Rate (DDR) lines. This is done 
+through clocking the data in and out on both the rsising edge and the falling edge of the clock. This helps reduce 
+the number of physical wires used to interconnect components on the PCB, making more space for routing other complex 
+busses (Such as DDR3 for the RAM). More information can be found \cite{RGMIISpec}.
 
 \subsection{Advanced Microcontroller Bus Architecture}
 

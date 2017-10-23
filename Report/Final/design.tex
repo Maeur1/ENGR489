@@ -1,5 +1,7 @@
 \chapter{Design}\label{C:design}
 
+\vspace{-3mm}
+
 \begin{figure}[H]
     \begin{center}
         \includegraphics[keepaspectratio,width=8cm]{Images/MeasurementSequence}
@@ -8,9 +10,10 @@
     \end{center}
 \end{figure}
 
+
 The goal of this project is to create a device which can measure latency between two connections with high precision
-and accuracy. \ref{fig:measurementsequency} shows the high level overview of what the device needs to be able to do.
-The following is the design decisions made to achieve the goal.
+and accuracy. Figure \ref{fig:measurementsequence} shows the high level overview of what the device needs to be able 
+to do. The following is the design decisions made to achieve the goal.
 
 \section{Hardware Design}
 
@@ -44,17 +47,17 @@ uses an extended version of MII called Reduced Gigabit Media Independent Interfa
 
 \section{Block Design (Concept)}
 
+\vspace{-3mm}
+
 \begin{figure}[H]
     \begin{center}
         \includegraphics[keepaspectratio,width=15cm]{Images/BlockDesignConcept}
-        \caption{Generic Block Design Concept}
+        \caption{Generic Block Design Concept. Blue represent FPGA logic blocks, Red represents Bare-Metal programs run on the ARM Processor, Green represents external ICs and Yellow represent other hardware external to the FPGA development board.}
         \label{fig:blockdesignconcept}
     \end{center}
 \end{figure}
 
-\par Figure above shows the conceptual structure of the design. Blue represent FPGA logic blocks, Red represents 
-Bare-Metal programs run on the ARM Processor, Green represents external ICs and Yellow represent other hardware 
-external to the FPGA development board.
+\vspace{-3mm}
 
 \par The Sender MAC, the FPGA produces a repeated signal of a network packets and an interrupt to a timing module to 
 begin counting. The number of packets per second (PPS) is controlled by hardware switches found on the development 
@@ -74,7 +77,8 @@ appended to the end of a file stored on the SD Card.
 \begin{figure}[H]
     \begin{center}
         \includegraphics[keepaspectratio,width=15cm]{Images/BlockDesignImpl}
-        \caption{FPGA Block Design Implementation}
+        \caption{FPGA Block Design Implementation. Each block is a VHDL module with the Input and Output exposed as 
+        ports on the block itself.}
         \label{fig:blockdesignimpl}
     \end{center}
 \end{figure}
@@ -85,35 +89,17 @@ lines represent single wires.  Connections on the left and right of the diagram 
 FPGA respectively. 
 
 \par The extra blocks in the upper area of the diagram represent constructs needed for AXI peripherals. This allows 
-the PS to interact and access registers found in the PL of the FPGA. AXI manages the control signalling for buffering 
+the Processing Systen (PS) to interact and access registers found in the Programmable Logic (PL) of the FPGA. AXI manages the control signalling for buffering 
 and clocking data in and out of the PS.
 
 \section{Reduced Gigabit Media Independent Interface (RGMII)}
 
-\par To provide a better understanding of RGMII, Gigabit Media Independent Interface (GMII) must be understood. 
-
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[keepaspectratio,height=5cm]{Images/GMIIWiring}
-        \caption{GMII Physical Wiring}
-        \label{fig:gmiiwiring}
-    \end{center}
-\end{figure}
-
-\begin{figure}[H]
-    \begin{center}
-        \includegraphics[keepaspectratio,width=15cm]{Images/GMIISignaling}
-        \caption{GMII Signal Timings}
-        \label{fig:gmiisignals}
-    \end{center}
-\end{figure}
-
-\par GMII is a full duplex interface between the MAC and an Ethernet Phy. As shown in Figure 2, the physical wiring 
-consists of 22 wires between the two devices. The signalling shown in Figure 3 gives an example of how data is 
+\par GMII is a full duplex interface between the MAC and an Ethernet Phy. As shown in Figure \ref{fig:gmiiwiring}, the physical wiring 
+consists of 22 wires between the two devices. The signalling shown in Figure \ref{fig:gmiisignals} gives an example of how data is 
 transferred to and from the Phy. Bytes transmitted to the Ethernet Phy are then converted and sent across the 
 Cat5e/6 cable. RGMII is a Dual Data Rate Extension to GMII, by which the data is clocked on both the rising and 
 falling edge of the clock. This means that one byte can be transmitted over four wires instead of 8, while keeping 
 the same clock frequency. This is advantageous as there is commonly limited space on a PCB for wiring interconnects 
-together, especially when there are more than 400 pins on a device (The XC7Z020-CLG484 found on the Zedboard, has 
+together, especially when there are more than 400 pins on a device (The XC7Z020-CLG484 has 
 484 package pins). 
 

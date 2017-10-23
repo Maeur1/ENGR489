@@ -25,26 +25,26 @@ engineer called Mike Field. The original design generated predefined packet stru
 
 \lstinputlisting[language=VHDL, firstline=16, lastline=41, basicstyle=\small]{Code/gigabit\string_test.vhd}
 
-The leds signal (REFERENCE ABOVE) represents a 4 LEDs which show the status of the generator. One LED is used for 
+The leds std\textunderscore logic signal represents a 4 LEDs which show the status of the generator. One LED is used for 
 full duplex communication, and the other 3 show the speed of the link (10mb, 100mb and 1000mb). 
 
 \lstinputlisting[language=VHDL, firstline=355, lastline=372, basicstyle=\small]{Code/gigabit\string_test.vhd}
 
-The switches (REFERENCE ABOVE) control the speed at which the generator creates packets. These switches are physical 
+The switches signal control the speed at which the generator creates packets. The switches signal is connected to physical 
 on off switches located on the device itself.  This control is an added feature built into the generator code 
 beforehand and was kept in the design so the user could select how fast to generate test data.
 
 \lstinputlisting[language=VHDL, firstline=46, lastline=52, basicstyle=\small]{Code/edge\string_detector.vhd}
 
 The modifications made to the generator was to create an interrupt on when the packet is sent and when a packet is 
-received. This is done through adding a module (REFERENCE ABOVE) which is wired to the RGMII signals themselves and 
+received. This is done through adding a module which is wired to the RGMII signals themselves and 
 produce an output to the sent and received outputs on the top-level module.
 
 \lstinputlisting[language=VHDL, firstline=36, lastline=37, basicstyle=\small]{Code/byte\string_data.vhd}
 
 To ensure that the generated packets are correctly switched through the network switch, the data needs to have the 
 correct MAC address for both the destination and sender. The sender address was hard coded into the generator to be 
-(MAC ADDRESS) and the receiver was coded to be (MAC ADDRESS). The receiver produces 1 packet per second to assist 
+3C:97:0E:87:D2:42 and the receiver was coded to be 3C:97:0E:87:D2:41.The receiver produces 1 packet per second to assist 
 the network switch in adding and entry to the MAC learning table to ensure that the sent packets from the generator 
 are not flooded to every port, every time. 
 
@@ -52,8 +52,7 @@ Interrupts for the timing module are created inside the generator and receiver. 
 of the signal which activates the chain of data sent to the Ethernet Phy, called start\textunderscore sending. This 
 signal goes high when a counter reaches a value corresponding to max\textunderscore count which will activate the 
 byte\textunderscore data module and begin sending data to the Ethernet Phy. The Received interrupt is generated when 
-the RX\textunderscore CTL line is high when the clock has a rising edge. This is defined in (REFERENCE THE STANDARD 
-HERE) as the point at which the Ethernet Phy has data for the MAC to receive. 
+the RX\textunderscore CTL line is high when the clock has a rising edge. This is defined in \cite{RGMIISpec} as the point at which the Ethernet Phy has data for the MAC to receive. 
 
 To measure the time between the two interrupts (Sending and receiving) another module is introduced. This module is 
 provided with an arbitrary clock which will determine the resolution of the timing. For the purposes of this project,
@@ -92,8 +91,3 @@ To perform a test with the device, a C program has been created which when run, 
 on the Ethernet FMC and detects the packets on PORT1. The time difference between these is then recorded and 
 processed before being written to a CSV file on the SD card. 
 
-%\lstinputlisting[language=VHDL, firstline=57, lastline=70, basicstyle=\small]{Code/InterruptTimer.vhd}
-
-%\lstinputlisting[language=VHDL, firstline=86, lastline=92, basicstyle=\small]{Code/packet\string_timer.c}
-
-%\lstinputlisting[language=VHDL, firstline=311, lastline=343, basicstyle=\small]{Code/gigabit\string_test.vhd}
