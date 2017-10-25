@@ -230,8 +230,16 @@ through clocking the data in and out on both the rsising edge and the falling ed
 the number of physical wires used to interconnect components on the PCB, making more space for routing other complex 
 busses (Such as DDR3 for the RAM). More information can be found \cite{RGMIISpec}.
 
-\subsection{Advanced Microcontroller Bus Architecture}
+\subsection{Advanced Microcontroller Bus Architecture (AMBA)}
 
-\subsection{Advanced eXtensible Interface}
+AMBA is a protocol for interconnecting devices to an ARM core. AMBA protocol allows for registers
+and data stored in a separate memory location to the main CPU, to be accessed by the CPU. This
+hardware protocol is already implemented in the Zynq-7000 Series FPGAs, allowing for the dual core
+ARM processor access the programmable logic data.
 
-\subsection{Serial Peripheral Interface}
+\subsection{Advanced eXtensible Interface (AXI)}
+
+AXI is a protocol which runs on top of AMBA interconnect. AXI is the software behind the AMBA interconnect, and
+ensures the timings and data between transactions are correct. This set of logic is already provided
+as a template from Xilinx when creating a new IP for the IP integrator. This protocol is used to
+connect peripherals designed in the programmable logic to the ARM processor.

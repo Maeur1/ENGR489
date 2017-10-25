@@ -31,12 +31,22 @@ with only the required components on board.
 
 \section{Conclusion}
 
-The device is currently a minimum viable product. The device can provide high resolution and reliable timings in a 
-flexible format.  This is useful for new research being done with high speed communications as the need for faster 
-data transfer grows and the measurement of smaller and smaller latencies is becoming more of an issue. This is 
-currently solved by using one of the many hardware device platforms that are available, but these do not offer 
-flexible way of obtaining results and require training in using the device.  Software platforms provide the 
-flexibility that hardware systems do not provide, but produce inconsistent and unreliable results.
+The goal of this project is to create a device which can allow for flexible, high precision network
+latency measurements. Current solutions are either flexible or not precise enough to allow for low
+latency measurements.
 
-As shown by this device, hardware platforms can be both flexible and provide reliable testing results. This device 
-fills a gap in the market where no proprietary software is needed to accompany the device for network packet analysis. 
+It was found that an FPGA would be a suitable device for the task, as the complexity of allowing a
+flexible platform while also providing high speed low level access to electrical signals. The device
+platform for the design is a Zedboard by AvNET which features a XC7Z020-CLG484 FPGA.
+
+The device is currently a minimum viable product. The device can provide high resolution and
+reliable timings in a flexible format. This is useful for new research being done with high speed
+communications as the need for faster data transfer grows and the measurement of smaller and
+smaller latencies is becoming more of an issue. This is currently solved by using one of the many
+hardware device platforms that are available, but these do not offer flexible way of obtaining results
+and require training in using the device. Software platforms provide the flexibility that hardware
+systems do not provide, but produce inconsistent and unreliable results.
+
+As shown by this device, hardware platforms can be both flexible and provide reliable testing results.
+This device fills a gap in the market where no proprietary software is needed to accompany the
+device for network packet analysis.
