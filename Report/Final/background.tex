@@ -142,26 +142,18 @@ This is also a very costly development board, costing \$4999 \cite{SUME} for aca
 Due to the limited scope of this project and the cost involved with purchasing this development board, this is 
 not a suitable platform for developing latency measuring device.
 
-\subsubsection{Xilinx Zynq FPGA}
-
-\par Xilinx is a manufacturer of FPGAs, and a family of products they produce is the Zynq-7000 range \cite{fpga}.
-These FPGAs integrate a dual-core ARM Cortex-A9 MPCore with FPGA gate fabric enabling high performance 
-applications to run on the FPGA, while embedded programs can run on the ARM cores.
-This project incorporates the FPGA section to manage the timing functions and the ARM section to run the 
-application for storing the timing information.
-
 \section{Related Work}
 
 \subsection{Moongen}
 
-\par MoonGen is a flexible high-speed network packet generator. The goal was to saturate 10 Gb Ethernet links using 
+\par MoonGen \cite{moongen} is a flexible high-speed network packet generator. The goal was to saturate 10 Gb Ethernet links using 
 a flexible hardware platform. A key issue defined in the paper was that Existing software solutions lack performance
 or flexibility when precision is desired. Existing hardware solutions are expensive with inflexible software accompanying
 the platform. A key takeaway is that existing platforms are inflexible and lack precision.
 
 \subsection{Flexible High Performance Traffic Generation on Commodity Multi–Core Platforms}
 
-\par A similar problem is solved with this paper. The goal was to saturate a 10 Gb Ethernet link using software methods.
+\par A similar problem is solved in \cite{multicore}. The goal was to saturate a 10 Gb Ethernet link using software methods.
 Another mention of inflexible hardware solutions was present in this paper, alluding to the fact that existing
 solutions that are based on hardware are lacking in flexiblity. This may seem to say that a hardware based solution may
 not be the correct approach to measuring latency, but this shows the novelty in a solution that is flexible
@@ -169,13 +161,23 @@ and hardware based.
 
 \subsection{A Distributed Instrument for Performance Analysis of Real-Time Ethernet Networks}
 
-This paper investigates the use of FPGAs to measure tranmission delays of Real-Time Ethernet networks. The magnitude
+\cite{realtime} investigates the use of FPGAs to measure tranmission delays of Real-Time Ethernet networks. The magnitude
 of delays involved here were upwards of 100 ns and was measureable by using multiple FPGA-based probes which allowed 
 synchronised logging of timestamps to realise the latency between industrial automation instruments. This is relevant
 to the project as it shows that FPGAs are a suitable tool to measure latency in ethernet based networks, and can
 measure latencies in the order of nanoseconds.
 
 \section{Hardware Implementation}
+
+\subsection{IEEE 802.3ab}
+
+\par IEEE 802.3ab is the defining standard for gigabit ethernet communication across a copper link. 
+It defines the use of 4 pairs of copper and the maximum length (100 m) the protocol is designed for.
+Ethernet Physical Transceiver (Ethernet PHY)
+An Ethernet PHY is an electronic component used to convert signalling from a link layer device (Such as a MAC) 
+to the physical layer (differential signalling with Pulse Amplitude Modulation). This conversion causes a delay when 
+changing between protocols which is a constant time. Common interfaces to communicate from a MAC to a PHY include 
+GMII, RGMII, XGMII.
 
 \subsection{Differential Signaling}
 
@@ -189,21 +191,12 @@ lines, and do not affect the difference between the two lines. This way informat
 distance reliably and at high speed. In Gigabit Ethernet, information is transferred through 4 pairs of twisted 
 differential paired cables.
 
-\subsection{Pulse Amplitude Modulation}
+\subsection{Pulse Amplitude Modulation (PAM)}
 
 \par Pulse Amplitude modulation is a form of modulating a signal with information encoded in discrete levels of pulses.
 Different versions of PAM have varying levels of discrete steps. In Gigabit Ethernet, PAM-5 is used with 5 
 different voltage levels each corresponding to different set of predefined binary codes interpreted by the 
 decoder.
-
-\subsection{IEEE 802.3ab}
-
-\par IEEE 802.3ab is the defining standard for gigabit ethernet communication across a copper link. 
-It defines the use of 4 pairs of copper and the maximum length (100 m) the protocol is designed for.
-Ethernet Physical Transceiver (Ethernet PHY)
-An Ethernet PHY is an electronic component used to convert signalling from a link layer device (Such as a MAC) 
-to the physical layer (differential signalling with PAM). Common interfaces to communicate from a MAC to a PHY 
-include GMII, RGMII, XGMII.
 
 \subsection{Gigabit Media Independent Interface (GMII)}
 
@@ -235,6 +228,16 @@ possible through the use of clocking all signals on a bus consisting of Dual-Dat
 through clocking the data in and out on both the rsising edge and the falling edge of the clock. This helps reduce 
 the number of physical wires used to interconnect components on the PCB, making more space for routing other complex 
 busses (Such as DDR3 for the RAM). More information can be found \cite{RGMIISpec}.
+
+\subsubsection{Xilinx Zynq FPGA}
+
+\par Xilinx is a manufacturer of FPGAs, and a family of products they produce is the Zynq-7000 range \cite{fpga}.
+These FPGAs integrate a dual-core ARM Cortex-A9 MPCore with FPGA gate fabric enabling high performance 
+applications to run on the FPGA, while embedded programs can run on the ARM cores. The ARM processor communicates
+to the programmable logic (PL) through the Advanced Microcontroller Bus Architechture (AMBA) interconnect
+using Advanced eXtensible Interface (AXI) protocol.
+This project incorporates the FPGA section to manage the timing functions and the ARM section to run the 
+application for storing the timing information.
 
 \subsection{Advanced Microcontroller Bus Architecture (AMBA)}
 
