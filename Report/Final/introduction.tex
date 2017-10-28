@@ -1,49 +1,44 @@
 \chapter{Introduction}\label{C:intro}
 
-\par Fast internet connections are becoming more and more desired as high bandwidth media consumption and internet 
-based services grow in popularity. Speed of an internet connection can be separated into two distinct metrics, 
-latency and bandwidth. Latency is the time taken for information to travel from one place to another and the delay 
+Fast internet connections are becoming more and more desired as high bandwidth media consumption and internet-based services grow in popularity. The speed of an internet connection can be separated into two distinct metrics,
+latency, and bandwidth. Latency is the time taken for information to travel from one place to another and the delay
 introduced by the device itself, while bandwidth is the amount of information that can flow reliably from end to end.
-When a user is accessing a website, such as Facebook, their requests traverse multiple network devices (physical 
-hardware) to reach that website's servers. Throughout this travel, each network device introduces some latency, as 
-there is processing time required to send information to the right destination. Although this delay is very small, 
+When a user is accessing a website, such as Facebook, their requests traverse multiple network devices (physical
+hardware) to reach that website's servers. Throughout this travel, each network device introduces some latency, as
+there is processing time required to send information to the right destination. Although this delay is very small,
 over the course of multiple hops it can become significant. Measuring this small latency with current solutions is
 convoluted and without the right systems, can be unreliable. By measuring this latency, we can enable research to
 reduce latency to create a faster internet.
 
 \section{Problem}
 
-\par There has been research dedicated to reducing latency. Some ways to reduce this latency include making “smart” network routers \cite{smartrouters} and low latency wireless systems \cite{5g}. 
-This research is reaching the point where network traffic can have latency as little as 1ms \cite{lessthan1ms} or below.
-To advance further, new tools need to have the capability of measuring this latency.
+There have been studies dedicated to the reduction of latency. Some ways to reduce this latency include making “smart” network routers \cite{smartrouters} and low latency wireless systems \cite{5g}. 
+This research is reaching the point where network traffic can have latency as little as 1ms \cite{lessthan1ms} or 
+below. To advance further, new tools need to have the capability of measuring this latency.
 
-\par Existing hardware solutions to measuring latency are capable of measuring less than 1 ms but require some 
-additional training in the software suite provided with the hardware \cite{dagfeatures}. Additional processes attached
-to hardware based methods can require dedicated computers for the measurement and analysis of networks. This means 
-that each researcher would require an understanding of the software suite accompanied with a dedicated computer 
+Existing hardware solutions to measuring latency are capable of measuring less than 1 ms but require some additional training in the software suite provided with the hardware \cite{dagfeatures}. Additional processes attached
+to hardware-based methods can require dedicated computers for the measurement and analysis of networks. This means
+that each researcher would require an understanding of the software suite accompanied with a dedicated computer
 all setup for specific tests to be run. Each different test would require reconfiguring of both hardware and software.
 This drives the cost of using the device up, in terms of both time and money.
 
-\par Current software solutions can measure latency in ethernet network traffic down to a resolution of
+Current software solutions can measure latency in ethernet network traffic down to a resolution of
 milliseconds and sometimes microseconds \cite{pingisbad}. There are no software solutions that can measure
-latency in the order of nanoseconds reliably \cite{timeinlinux}. Measuring the latency in nanoseconds is needed as
-network switches have very low latency and the time between ingress and egress can range from
+latency in the order of nanoseconds reliably \cite{timeinlinux}. Measuring the latency in nanoseconds is needed as network switches have very low latency and the time between ingress and egress can range from
 microseconds to nanoseconds. If it could be measured accurately, then analysis could be performed
 on network traffic through network switches to research new ways to reduce latency.
 
-\par Existing methods to measure latency within microseconds and nanoseconds require monolithic devices which need 
+Existing methods to measure latency within microseconds and nanoseconds require monolithic devices which need
 setting up and installing device drivers, proprietary software, or even a replacement of existing hardware systems.
-Once setup, these devices often require data conversion of results to be compatible with data analysis methods and 
-evaluation programs. Occasionally these programs are embedded within in manufacturers software, but the user is 
-limited to what the manufacturer has chosen as relevant outputs for the user. These can be useful most of the time, 
-but occassionally the user would need to export the data to another data analysis tool they are familiar with for 
-futher processing. This inflexibility is prominent in many high end network performance analysis tools, causing 
-delays in retrieving test results for evaluation.
+Once set up, these devices often require data conversion of results to be compatible with data analysis methods and
+evaluation programs. Occasionally these programs are embedded within in manufacturers software, but the user is
+limited to what the manufacturer has chosen as relevant outputs for the user. These can be useful most of the time,
+but occasionally the user would need to export the data to another data analysis tool they are familiar with for
+further processing. This inflexibility is prominent in many high-end network performance analysis tools, causing delays in retrieving test results for evaluation.
 
-\par A reduction in network latency would be a huge boon to future technologies. For example, less
+A reduction in network latency would be a huge boon to future technologies. For example, less
 latency in video streaming can enable doctors from remote locations to perform surgery with
-minimal lag between actions and responses \cite{remotesurgery}. The stock market is another example of improvement with
-this technology, as less latency ensures that stock market trade deals can be completed faster.
+minimal lag between actions and responses \cite{remotesurgery}. The stock market is another example of improvement with this technology, as less latency ensures that stock market trade deals can be completed faster.
 
 \begin{quote}
     \centering
@@ -54,10 +49,10 @@ this technology, as less latency ensures that stock market trade deals can be co
 \par Many improvements made at a nanosecond scale can add up to microseconds or even milliseconds of latency
 reduction. Improvements cannot be done without knowing how much this can improve by without the tools to measure it.
 
-\par A software based approach has the limitation that the timing functions must be processed by a
-Central Processing Unit (CPU) \cite{CPUtiming}. This means the counters for timing functions could be offset from the true value. Higher
-resolution latency measurements can be achieved through a hardware implementation of a packet
-timer. This circumvents the limitations of a software based approach.
+A software-based approach has the limitation that the timing functions must be processed by a
+Central Processing Unit (CPU) \cite{CPUtiming}. This means the counters for timing functions could be offset from 
+the true value. Higher resolution latency measurements can be achieved through a hardware implementation of a packet
+timer. This circumvents the limitations of a software-based approach.
 
 \section{Solution}
 
@@ -67,7 +62,7 @@ not in the scope of this project.
 
 Because the nature of when the latency occurs, it would be best measured by considering the raw electronic signals 
 from the ethernet port on the device to ensure there is no operating system lag. To achieve this, microcontrollers, 
-discrete logic gates and a Field Programmable Gate Array could be implemented. A microcontroller could be used but 
+discrete logic gates, and a Field Programmable Gate Array could be implemented. A microcontroller could be used but 
 then the same issues arise, that a CPU clocking through instructions would deviate the true timing counter value. 
 Another approach would be to use discrete logic gates to measure the timing accurately, but this will become 
 complicated very rapidly, and propagation delays through discrete devices would reduce the accuracy. Hence the 
@@ -78,8 +73,8 @@ to using an FPGA is that the learning curve to developing on the platform is qui
 with existing systems is difficult and is usually aided by the use of a microcontroller (such as an ARM or x86 based 
 co-processor)
 
-\par This report will focus on the work done so far in implementing a FPGA based packet latency timing
-device. This project is limited to Ethernet based networks as they are most widely used \cite{etherneteverywhere}.
+\par This report will focus on the work done so far in implementing an FPGA based packet latency timing
+device. This project is limited to Ethernet-based networks as they are most widely used \cite{etherneteverywhere}.
 The next section describes some key concepts around the problem, with some examples of current implementations of the
 solution. Following that will by the approach taken to design the FPGA based device beginning with hardware choices
 made and the details of what the final implementation would look like. After, the implementation details of the 
