@@ -53,7 +53,7 @@ packet latency measurements for that cable were then plotted versus the length o
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[keepaspectratio,height=8.2cm]{Images/CableTesting}
+        \includegraphics[keepaspectratio,height=7.8cm]{Images/CableTesting}
         \caption{Results from FPGA device latency accuracy measurements with 0.65 Velocity Factor}
         \label{fig:cableTesting}
     \end{center}
@@ -62,12 +62,13 @@ packet latency measurements for that cable were then plotted versus the length o
 As shown in Figure \ref{fig:cableTesting}, the results from the device show a linear trend in latency due to length 
 of the cable. The velocity factor was obtained from \cite{VelFactor} and a change in velocity factor could be a factor 
 for the discrepancies found in the gradients. The values have an error of ±4 ns as the points fluctuated above and 
-below a certain value and the average was plotted. There were no outliers during testing, showing how the device is 
+below a certain value and the average was plotted. The confidence interval for these values is plotted on the graph, 
+which is approximately 4.12ns for each test. There were no outliers during testing, showing how the device is 
 not prone to producing wildly different results.
 
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[keepaspectratio,height=8.2cm]{Images/CableTesting075}
+        \includegraphics[keepaspectratio,height=7.8cm]{Images/CableTesting075}
         \caption{Results from FPGA device latency accuracy measurements with 0.75 Velocity Factor}
         \label{fig:cableTesting075}
     \end{center}
@@ -149,15 +150,15 @@ causing a change in standard deviation.
 
 \begin{table}[h!]
     \begin{center}
-        \begin{tabular}{ |p{9cm}||p{2.5cm}|p{2.5cm}| }
+        \begin{tabular}{ |p{9cm}||*{3}{p{2cm}|} }
             \hline
-            Device & FPGA Device & PF\textunderscore RING\\
+            Device & FPGA (Switch) & PF\textunderscore RING (Switch) & FPGA (25m Cable)\\
             \hline
-            Standard Deviation & 1878.23 & 20754.18\\
-            Mean & 25989.76 & 72431.35\\
-            Coefficient of Variation & 0.07 & 0.28\\
-            Standard Deviation Improvement vs PF\textunderscore RING & 11.04 & 1\\
-            Coefficient of Variation Improvement vs PF\textunderscore RING & 3.96 & 1\\
+            Standard Deviation & 1878.23 & 20754.18 & 2.45\\
+            Mean & 25989.76 & 72431.35 & 110.56\\
+            Coefficient of Variation & 0.07 & 0.28 & 0.02\\
+            Standard Deviation Improvement vs PF\textunderscore RING & 11.04 & 1 & 8471.09\\
+            Coefficient of Variation Improvement vs PF\textunderscore RING & 3.96 & 1 & 14\\
             \hline
         \end{tabular}
         \caption{Statistics of results}

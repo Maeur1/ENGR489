@@ -146,18 +146,19 @@ not a suitable platform for developing latency measuring device.
 
 \subsection{Moongen}
 
-\par MoonGen \cite{moongen} is a flexible high-speed network packet generator. The goal was to saturate 10 Gb Ethernet links using 
-a flexible hardware platform. A key issue defined in the paper was that Existing software solutions lack performance
-or flexibility when precision is desired. Existing hardware solutions are expensive with inflexible software accompanying
-the platform. A key takeaway is that existing platforms are inflexible and lack precision.
+\par MoonGen \cite{moongen} is a flexible high-speed network packet generator. The goal was to saturate 10 Gb 
+Ethernet links using a flexible hardware platform. A key issue defined in the paper was that Existing software 
+solutions lack performance or flexibility when precision is desired. Existing hardware solutions are expensive with 
+inflexible software accompanying the platform. A key takeaway is that existing platforms are inflexible and lack 
+precision.
 
 \subsection{Flexible High Performance Traffic Generation on Commodity Multi–Core Platforms}
 
-\par A similar problem is solved in \cite{multicore}. The goal was to saturate a 10 Gb Ethernet link using software methods.
-Another mention of inflexible hardware solutions was present in this paper, alluding to the fact that existing
-solutions that are based on hardware are lacking in flexibility. This may seem to say that a hardware-based solution may
-not be the correct approach to measuring latency, but this shows the novelty in a solution that is flexible
-and hardware based.
+\par A similar problem is solved in \cite{multicore}. The goal was to saturate a 10 Gb Ethernet link using software 
+methods. Another mention of inflexible hardware solutions was present in this paper, alluding to the fact that 
+existing solutions that are based on hardware are lacking in flexibility. This may seem to say that a hardware-based 
+solution may not be the correct approach to measuring latency, but this shows the novelty in a solution that is 
+flexible and hardware based.
 
 \subsection{A Distributed Instrument for Performance Analysis of Real-Time Ethernet Networks}
 
@@ -174,8 +175,8 @@ measure latencies in the order of nanoseconds.
 \par IEEE 802.3ab is the defining standard for gigabit ethernet communication across a copper link. 
 It defines the use of 4 pairs of copper and the maximum length (100 m) the protocol is designed for.
 Ethernet Physical Transceiver (Ethernet PHY)
-An Ethernet PHY is an electronic component used to convert signaling from a link layer device (Such as a MAC) 
-to the physical layer (differential signaling with Pulse Amplitude Modulation). This conversion causes a delay when 
+An Ethernet PHY is an electronic component used to convert signaling from a Layer 2 device (Such as a MAC) 
+to Layer 1 (Differential signaling with Pulse Amplitude Modulation). This conversion causes a delay when 
 changing between protocols which is a constant time. Common interfaces to communicate from a MAC to a PHY include 
 GMII, RGMII, XGMII.
 
